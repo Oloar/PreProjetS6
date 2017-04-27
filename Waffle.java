@@ -51,4 +51,8 @@ class Waffle {
 	public boolean isAWin() {
 		return !isEatable(0, 0);
 	}
+
+	public boolean isInWaffle(int row, int col){
+		return (row>=0 && col>=0 && row<this.height && col<this.width);
+	}
 }

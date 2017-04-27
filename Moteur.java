@@ -25,16 +25,21 @@ public class Moteur implements Interface_Moteur {
 
 
 	public void eat(int i, int j){
-		for(int row = i; row < waffle.getHeight(); row++) {
-			for(int col = j; col < waffle.getWidth(); col++) {
-				if(waffle.isEatable(row, col)) {
-					waffle.eatCase(row, col, currentMove);
+
+		if(this.waffle.isInWaffle(i, j)){
+			// Incremente le compteur de coups
+			currentMove++;
+			for(int row = i; row < waffle.getHeight(); row++) {
+				for(int col = j; col < waffle.getWidth(); col++) {
+					if(waffle.isEatable(row, col)) {
+						waffle.eatCase(row, col, currentMove);
+					}
 				}
 			}
+			update_graphic();
+		} else {
+			System.out.println("OutOfGauffreException");
 		}
-		// Incremente le compteur de coups
-		currentMove++;
-		update_graphic();
 	}
 
 	public void save(String file){

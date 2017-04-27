@@ -43,7 +43,7 @@ class Waffle {
 
 	// Mange une case mageable
 	// Affecte à la case (row, col) le numéro du coup (Gestion de l'historique)
-	public void eatCase(row, col, moveNb) {
+	public void eatCase(int row, int col, int moveNb) {
 		this.board[row][col] = moveNb;
 	}
 

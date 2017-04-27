@@ -8,6 +8,8 @@ public class Moteur implements Interface_Moteur {
 	int arrayPlayer[];
 	int currentMove;
 
+
+
 	public Moteur(int height, int width, int player1, int player2){
 
 		Random rand = new Random();
@@ -32,6 +34,7 @@ public class Moteur implements Interface_Moteur {
 		}
 		// Incremente le compteur de coups
 		currentMove++;
+		update_graphic();
 	}
 
 	public void save(String file){
@@ -40,8 +43,8 @@ public class Moteur implements Interface_Moteur {
 
 	public void undo(){
 		// Parcours toutes les cases du tableau
-		for(int row = 0; row < waffle.height; row++) {
-			for(int col = 0, col < waffle.width; col++) {
+		for(int row = 0; row < waffle.getHeight(); row++) {
+			for(int col = 0, col < waffle.getWidth(); col++) {
 				// Si la case correspond au coup précédent
 				if(waffle.getValue(row, col) == currentMove - 1) {
 					// Remet la case à zero
@@ -74,7 +77,14 @@ public class Moteur implements Interface_Moteur {
 	}
 
 	public void update_graphic(){
-
+		for (int i = 0; i < waffle.getHeight(); i++) {
+			for (int j=0; j < waffle.getWidth(); j++) {
+				if (waffle.getValue(i, j) > 0) {
+					// on rend la case invisible
+				}
+			}
+			
+		}
 	}
 
 }

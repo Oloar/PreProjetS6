@@ -22,6 +22,14 @@ class Waffle {
 	public int getValue(int row, int col) {
 		return this.board[row][col];
 	}
+	// Renvoie la hauteur de la gauffre
+	public int getHeight() {
+		return this.height;
+	}
+	// Renvoie la largeur de la gauffre (row, col)
+	public int getWidth() {
+		return this.width;
+	}
 
 	// Réinitialise une case (row, col)
 	public void revert(int row, int col) {

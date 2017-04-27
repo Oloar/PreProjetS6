@@ -1,3 +1,4 @@
+import java.io.*;
 public interface Interface_Moteur {
 
 	// fonction qui va manger (affecter un numéro aux case en bas a droite de i, j)

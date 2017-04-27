@@ -1,11 +1,10 @@
 import javafx.application.Application;
-import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -17,10 +16,20 @@ public class GameInterface extends Application {
 	private final int winHeight = 720;
 	
 	// -- Tests --
-	private final int [][]arrayTest = {
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}};
+	private final double arrayWPow = 2;
+	private final double arrayHPow = 1;
+	private final int arrayW = (int)Math.pow(2, arrayWPow);
+	private final int arrayH = (int)Math.pow(3, arrayHPow);
+	private final Integer [][]arrayTest = {
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0}};
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -36,17 +45,65 @@ public class GameInterface extends Application {
 		borderPaneInfo.setRight(gridPaneButtons);
 		
 		// -- Grille Jeu --
-		// TODO
+		gridPaneGame.setMaxWidth(winWidth);
+		gridPaneGame.setMaxHeight(winHeight-208+6);
+		gridPaneGame.setAlignment(Pos.CENTER);
+		for (int w=0; w<arrayW; w++) {
+			for (int h=0; h<arrayH; h++) {
+				if (arrayTest[h][w] == 0) {
+					// Haut Gauche
+					if (w == 0  &&  h == 0) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Gauche
+					else if (w == 0  &&  h != arrayH-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Bas Gauche
+					else if (w == 0  &&  h == arrayH-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Haut
+					else if (w != arrayW-1  &&  h == 0) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_top.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Bas
+					else if (w != arrayW-1  &&  h == arrayH-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Haut Droite
+					else if (w == arrayW-1  &&  h == 0) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Droite
+					else if (w == arrayW-1  &&  h != arrayH-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Bas Droite
+					else if (w == arrayW-1  &&  h == arrayH-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					// Centre
+					else {
+						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+				}
+			}
+		}
 		
 		// -- Info Joueurs --
 		Rectangle rectInfo = new Rectangle(0, 0, ((winWidth-6)/2), 208);
 		rectInfo.setFill(Color.LIGHTGREY);
+		rectInfo.setStroke(Color.BLACK);
+		rectInfo.setStrokeWidth(3);
 		Text textPlayer = new Text("Joueur");
 		textPlayer.setStyle("-fx-font-size: 50pt;");
 		
 		// -- Info Bouttons --
-		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth-6)/2), 208);
+		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth)/2)-9, 208);
 		rectButton.setFill(Color.LIGHTGREY);
+		rectButton.setStroke(Color.BLACK);
+		rectButton.setStrokeWidth(3);
 		Button buttonUndo = new Button("Undo");
 		Button buttonSave = new Button("Save");
 		Button buttonMenu = new Button("Menu");
@@ -63,8 +120,6 @@ public class GameInterface extends Application {
 		
 		
 		
-		// -- GridPaneGame --
-		//gridPaneGame.add(b1, 0, 0);
 		
 		// -- GridPanePlayer --
 		gridPanePlayer.setHgap(1);
@@ -72,7 +127,7 @@ public class GameInterface extends Application {
 		gridPanePlayer.add(textPlayer, 100, 0);
 		
 		// -- GridPaneButtons --
-		gridPaneButtons.setHgap(28);
+		gridPaneButtons.setHgap(29);
 		gridPaneButtons.add(rectButton, 0, 0); GridPane.setColumnSpan(rectButton, 20);
 		gridPaneButtons.add(hBoxButtons, 3, 0);
 		
@@ -81,9 +136,10 @@ public class GameInterface extends Application {
 		// -- Scene --
 		Scene scene = new Scene(borderPane, 300, 250);
 		
-		primaryStage.setTitle("Gauffre");
+		primaryStage.setTitle("Waffle 1.0");
 		primaryStage.setWidth(winWidth);
 		primaryStage.setHeight(winHeight);
+		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

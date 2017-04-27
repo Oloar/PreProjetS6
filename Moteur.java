@@ -8,6 +8,7 @@ public class Moteur implements Interface_Moteur {
 	int arrayPlayer[];
 	int height;
 	int width;
+	int cellValue;
 
 	public Moteur(int height, int width, int player1, int player2){
 
@@ -22,6 +23,8 @@ public class Moteur implements Interface_Moteur {
 		this.height = (int)Math.pow(3, height);
 
 		this.arrayWaffle = new int[this.height][this.width];
+		
+		this.cellValue = 0;
 
 		// initialise le tableau à 0 de partout
 		for(int i=0; i<this.height; i++){
@@ -32,9 +35,15 @@ public class Moteur implements Interface_Moteur {
 	}
 
 
-	public void eat(int i, int j){
-
-	}
+	public void eat(int i, int j) {
+        	this.cellValue++;
+		for (int currentRow = i; currentRow < height; currentRow++) {
+            		for (int currentColumn = j; currentColumn < width; currentColumn++){
+                		arrayWaffle[currentRow][currentColumn] = this.cellValue;
+            		}            		
+		}
+		update_graphic();		
+    	}
 
 	public void save(String file){
 
@@ -64,7 +73,14 @@ public class Moteur implements Interface_Moteur {
 	}
 
 	public void update_graphic(){
-
+		for (int i = 0; i < height; i++) {
+			for (int j=0; j < width; j++) {
+				if (arrayWaffle[i][j] > 0) {
+					// on rend la case invisible 	
+				}
+			}
+			
+		}
 	}
 
 }

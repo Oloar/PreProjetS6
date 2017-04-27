@@ -1,0 +1,15 @@
+public class Gauffre {
+    int rows, columns, cellValue, arrayIntGauffre[][];    
+
+    public Gauffre(int rows, int columns) {
+        arrayIntGauffre = new int[rows][columns];
+        this.rows = rows;
+        this.columns = columns;
+        cellValue = 0;
+        for (int i=0; i< rows; i++) {
+            for (int j=0; j< columns; j++) {
+                arrayIntGauffre[i][j] = 0;
+            }
+        }
+    }
+}

@@ -7,6 +7,7 @@ public class Moteur implements Interface_Moteur {
 	int whoStart;
 	int arrayPlayer[];
 	int currentMove;
+	int currentPlayer;
 
 
 
@@ -14,6 +15,7 @@ public class Moteur implements Interface_Moteur {
 
 		Random rand = new Random();
 		this.whoStart = rand.nextInt(2)+1;
+		this.currentPlayer = this.whoStart;
 		this.currentMove = 0;
 
 		this.arrayPlayer = new int[2];
@@ -36,6 +38,7 @@ public class Moteur implements Interface_Moteur {
 					}
 				}
 			}
+			currentPlayer = (currentPlayer+1) % 2;
 			update_graphic();
 		} else {
 			System.out.println("OutOfGauffreException");
@@ -47,19 +50,25 @@ public class Moteur implements Interface_Moteur {
 	}
 
 	public void undo(){
-		// Parcours toutes les cases du tableau
-		for(int row = 0; row < waffle.getHeight(); row++) {
-			for(int col = 0; col < waffle.getWidth(); col++) {
-				// Si la case correspond au coup précédent
-				if(waffle.getValue(row, col) == currentMove - 1) {
-					// Remet la case à zero
-					waffle.revert(row, col);
+
+		if(currentMove > 0){
+
+			// Parcours toutes les cases du tableau
+			for(int row = 0; row < waffle.getHeight(); row++) {
+				for(int col = 0; col < waffle.getWidth(); col++) {
+					// Si la case correspond au coup précédent
+					if(waffle.getValue(row, col) == currentMove - 1) {
+						// Remet la case à zero
+						waffle.revert(row, col);
+					}
 				}
 			}
+			// Décremente le compteur de coups
+			currentMove --;
+			// this.switchPlayers();
+		} else {
+			System.out.println("Rien à annuler");
 		}
-		// Décremente le compteur de coups
-		currentMove --;
-		// this.switchPlayers();
 	}
 
 	public void load(String file){
@@ -71,6 +80,7 @@ public class Moteur implements Interface_Moteur {
 		System.out.println("Joueur 1 : "+this.arrayPlayer[0]);
 		System.out.println("Joueur 2 : "+this.arrayPlayer[1]);
 		System.out.println("Joueur "+this.whoStart+" a commencé");
+		System.out.println("C\'est au tour de Joueur "+(this.currentPlayer+1));
 		System.out.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
 		for(int i=0; i<this.waffle.getHeight(); i++){
 			for(int j=0; j<this.waffle.getWidth(); j++){
@@ -82,14 +92,11 @@ public class Moteur implements Interface_Moteur {
 	}
 
 	public void update_graphic(){
-		for (int i = 0; i < waffle.getHeight(); i++) {
-			for (int j=0; j < waffle.getWidth(); j++) {
-				if (waffle.getValue(i, j) > 0) {
-					// on rend la case invisible
-				}
-			}
-			
-		}
+		// appel a IHM
+	}
+
+	public boolean isFinished(){
+		return this.waffle.isAWin();
 	}
 
 }

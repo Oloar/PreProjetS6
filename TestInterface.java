@@ -1,4 +1,4 @@
-package preprojets6;
+
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

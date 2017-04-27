@@ -1,3 +1,4 @@
+import java.io.*;
 public interface Interface_Moteur {
 
 	// fonction qui va manger (affecter un numéro aux case en bas a droite de i, j)
@@ -8,7 +9,7 @@ public interface Interface_Moteur {
 	// Qui a commencé
 	// Taille du tableau A= B= (rappel largeur = 2^A et hauteur = 3^B)
 	// Puis le tableau de la gauffre
-	public void save(String file);
+	public void save(String file) throws IOException;
 
 	// Charge une partie en fonction du contenu du fichier file 
 	public void load(String file);

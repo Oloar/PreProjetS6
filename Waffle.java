@@ -18,18 +18,28 @@ class Waffle {
 		}
 	}
 
-	// Retourne vrai si la case est mangeable
+	// Renvoie la valeur de la case (row, col)
+	public int getValue(int row, int col) {
+		return this.board[row][col];
+	}
+
+	// Réinitialise une case (row, col)
+	public void revert(int row, int col) {
+		this.board[row][col] = 0;
+	}
+
+	// Retourne vrai si la case (row, col) est mangeable
 	public boolean isEatable(int row, int col) {
 		return (this.board[row][col] == 0);
 	}
 
 	// Mange une case mageable
-	// Affecte à la case le numéro du coup (Gestion de l'historique)
-	public eatCase(row, col, moveNb) {
+	// Affecte à la case (row, col) le numéro du coup (Gestion de l'historique)
+	public void eatCase(row, col, moveNb) {
 		this.board[row][col] = moveNb;
 	}
 
-	// Verifie si un joueur à mangé la case empoisonnée
+	// Verifie si un joueur à mangé la case empoisonnée (0,0)
 	public boolean isAWin() {
 		return !isEatable(0, 0);
 	}

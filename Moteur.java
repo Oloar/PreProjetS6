@@ -24,7 +24,7 @@ public class Moteur implements Interface_Moteur {
 
 		this.arrayWaffle = new int[this.height][this.width];
 		
-		cellValue = 0;
+		this.cellValue = 0;
 
 		// initialise le tableau à 0 de partout
 		for(int i=0; i<this.height; i++){
@@ -36,10 +36,10 @@ public class Moteur implements Interface_Moteur {
 
 
 	public void eat(int i, int j) {
-        	arrayWaffle.cellValue++;
+        	this.cellValue++;
 		for (int currentRow = i; currentRow < height; currentRow++) {
             		for (int currentColumn = j; currentColumn < width; currentColumn++){
-                		arrayWaffle[currentRow][currentColumn] = arrayWaffle.cellValue;
+                		arrayWaffle[currentRow][currentColumn] = this.cellValue;
             		}            		
 		}
 		update_graphic();		

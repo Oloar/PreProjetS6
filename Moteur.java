@@ -42,8 +42,23 @@ public class Moteur implements Interface_Moteur {
 		}
 	}
 
-	public void save(String file){
-
+	public void save(String filename){
+		try{
+			PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
+			saveFile.println("Joueur 1 : "+this.arrayPlayer[0]);
+			saveFile.println("Joueur 2 : "+this.arrayPlayer[1]);
+			saveFile.println("Joueur "+this.whoStart+" a commencé");
+			saveFile.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
+			for(int i=0; i<this.waffle.getHeight(); i++){
+				for(int j=0; j<this.waffle.getWidth(); j++){
+					saveFile.print(this.waffle.getValue(i, j));
+				}
+				saveFile.println();
+			}
+			saveFile.close();
+		} catch (IOException e) {
+			System.err.println("Err: Echec d'ouverture du fichier.");
+		}
 	}
 
 	public void undo(){
@@ -62,7 +77,7 @@ public class Moteur implements Interface_Moteur {
 		// this.switchPlayers();
 	}
 
-	public void load(String file){
+	public void load(String filename){
 
 	}
 

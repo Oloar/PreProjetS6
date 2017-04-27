@@ -8,10 +8,10 @@ public interface Interface_Moteur {
 	// Qui a commencé
 	// Taille du tableau A= B= (rappel largeur = 2^A et hauteur = 3^B)
 	// Puis le tableau de la gauffre
-	public void save(String file);
+	public void save(String filename);
 
-	// Charge une partie en fonction du contenu du fichier file 
-	public void load(String file);
+	// Charge une partie en fonction du contenu du fichier filename
+	public void load(String filename);
 
 	// annule le dernier coup effectué
 	public void undo();

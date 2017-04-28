@@ -107,7 +107,7 @@ public class Joueur{
 		if(this.difficulty == HUMAN){
 			retu += "Joueur "+this.number;
 		} else {
-			retu += "IA";
+			retu += "IA"+this.number;
 		}
 		return retu;
 	}

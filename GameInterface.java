@@ -25,6 +25,7 @@ public class GameInterface extends Application {
 	private final int winHeight = 720;
 	
 	// -- Tests --
+	private int player = 1;
 	private final double arrayWPow = 3;
 	private final double arrayHPow = 2;
 	private final int arrayW = (int)Math.pow(2, arrayWPow);
@@ -39,6 +40,12 @@ public class GameInterface extends Application {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0}};
+	
+	
+	
+	private static Scene fetchMenuScene () {
+		return new MenuInterface().getMenuScene();
+	}
 	
 	
 	
@@ -84,7 +91,15 @@ public class GameInterface extends Application {
 					}
 				}
 				else {
-					gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					if (player == 1) {
+						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					else if (player == 2) {
+						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					else {
+						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
 				}
 			}
 		}
@@ -166,7 +181,7 @@ public class GameInterface extends Application {
 		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				primaryStage.setScene(MenuInterface.getScene());
+				primaryStage.setScene(fetchMenuScene());
 				System.out.println("Return to Menu...");
 			}
 		});
@@ -205,7 +220,7 @@ public class GameInterface extends Application {
 	
 	
 	
-	public final Scene getGameScene() {
+	public Scene getGameScene() {
 		return gameScene;
 	}
 	

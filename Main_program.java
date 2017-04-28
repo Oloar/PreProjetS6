@@ -31,11 +31,15 @@ class Main_program {
 				}
 
 				m = new Moteur(height, width, 0, 1);
-
+				//m.save("file1"); 
 				System.out.println("Debut partie");
 
-				m.game(affText, affGraph);
+				System.out.println(m.load("file1"));
 
+				//m.game(affText, affGraph);
+				
+								
+				
 				System.out.println("Partie terminée");
 			}
 		}

@@ -80,12 +80,117 @@ public class Joueur{
 			return new Couple(i, j);
 
 
-		} else {
+		}
+		else if (this.difficulty == HARD) {
+			return this.iaHard();
+		}
+		else {
 			System.out.println("NOT IMPLEMENTED YET");
 			return new Couple(-1, -1);
 		}
 
 
+	}
+
+	// IA HARD
+	private int min(int i, int j) {
+		if(i < j) {
+			return i;
+		}
+		return j;
+	}
+
+	private int max(int i, int j) {
+		if(i < j) {
+			return i;
+		}
+		return j;
+	} 
+
+	private int countFreeCaseLine(int c) {
+		int col = 0;
+
+		while (col < this.waffle.getWidth() && this.waffle.getValue(c, col) == 0) {
+			col++;
+		}
+		return col - c;
+	}
+
+	private int countFreeCaseCol(int c) {
+		int row = c;
+
+		while (row < this.waffle.getHeight() && this.waffle.getValue(row, c) == 0) {
+			row++;
+		}
+		return row - c;
+	}
+
+	private Couple iaHard() {
+		Random rand = new Random();
+		int imin = this.waffle.getHeight();
+		int jmin = this.waffle.getWidth();
+		int i, j;
+		int coord,
+			nbCaseCol,
+			nbCaseline;
+
+		// Determine la case pivot
+		for (i = 0; i < this.waffle.getHeight(); i++) {
+			for (j = 0; j < this.waffle.getWidth(); j++) { // While
+				if(this.waffle.getValue(i, j) != 0){
+					if (i < imin) {
+						imin = i;
+					}
+					if (j < jmin) {
+						jmin = j;
+					}
+				}
+			}
+		}
+		if (imin != 0 && jmin != 0) {
+			 imin --;
+			 jmin --;
+		}
+
+		// Case pivot (coord, coord)
+		coord = min(max(imin, jmin), min((this.waffle.getHeight() - 1), (this.waffle.getWidth() - 1)));
+		nbCaseCol = countFreeCaseCol(coord);
+		nbCaseline = countFreeCaseLine(coord);
+
+		// Si le pivot n'est pas le poison, l'IA equilibre
+		if (coord > 0) {
+			if (nbCaseline > nbCaseCol) {
+				return new Couple(coord, coord + nbCaseCol); // On equilibre la situation
+			}
+			else if (nbCaseline < nbCaseCol) {
+				return new Couple(coord + nbCaseline, coord); // On equilibre la situation
+			}
+			else {
+				// Sinon on prend le pivot
+				if (nbCaseline == 0) {
+					return new Couple((coord-1), (coord-1));
+				}
+				else {
+					return new Couple(coord, coord);
+				}
+			}
+		}
+		else {
+			if (nbCaseline > nbCaseCol) {
+				return new Couple(coord, coord + nbCaseCol); // On equilibre la situation
+			}
+			else if (nbCaseline < nbCaseCol) {
+				return new Couple(coord + nbCaseline, coord); // On equilibre la situation
+			}
+			else { // nbCaseCol == nbCaseline
+				if (rand.nextInt(2) == 0) { // Joue dans la colonne
+					return new Couple(coord, coord + nbCaseline - 1);
+				}
+				else { // Joue dans la ligne
+					return new Couple(coord + nbCaseCol - 1, coord);
+				}
+			}
+		}
 	}
 
 	public void sleep(int n){
@@ -119,3 +224,12 @@ public class Joueur{
 
 
 }
+
+/*
+
+X000
+0333
+0321
+0321
+
+*/

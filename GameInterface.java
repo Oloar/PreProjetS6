@@ -166,7 +166,7 @@ public class GameInterface extends Application {
 		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				// TODO - primaryStage.setScene(MenuInterface.getScene());
+				primaryStage.setScene(MenuInterface.getScene());
 				System.out.println("Return to Menu...");
 			}
 		});

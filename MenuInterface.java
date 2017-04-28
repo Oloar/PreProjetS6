@@ -13,14 +13,63 @@ public class MenuInterface extends Application{
     
     private final int winWidth = 1080;
     private final int winHeight = 720;
+    private Scene menuPrincipal;
+    private Scene menuSecondaire;
 
     @Override
     public void start(Stage primaryStage) {
         
-        //Buttons
+        this.initMenuPrincipal();
+        this.initMenuSecondaire();
+
+        primaryStage.setTitle("Waffle 1.0");
+        primaryStage.setWidth(winWidth);
+        primaryStage.setHeight(winHeight);
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(new Image("ressources/waffle.png"));
+        primaryStage.setScene(menuPrincipal);
+        
+        primaryStage.show();
+    }
+
+    public void initMenuSecondaire(){
+
+    	//Buttons du menu secondaire
+    	Button solo = createButton("Solo", "4");
+    	Button versus = createButton("Versus", "5");
+        Button retour = createButton("Retour", "6");
+        solo.setMaxHeight(Double.MAX_VALUE);
+        versus.setMaxHeight(Double.MAX_VALUE);
+        retour.setMaxHeight(Double.MAX_VALUE);
+        solo.setMinWidth(300);
+        versus.setMinWidth(300);
+        retour.setMinWidth(300);
+        solo.setStyle("-fx-font-size: 20pt;");
+        versus.setStyle("-fx-font-size: 20pt;");
+        retour.setStyle("-fx-font-size: 20pt;");
+      
+        //Grid du menu secondaire
+        GridPane menu = new GridPane();
+        menu.setHgap(5);
+        menu.setVgap(5);
+        menu.add(solo,75,30);
+        menu.add(versus,75,35);
+        menu.add(retour,75,40);
+        Image imgTitle = new Image("ressources/waffle_title.png");
+        ImageView viewTitle = new ImageView(imgTitle);
+        menu.add(viewTitle, 55, 10);
+        GridPane.setColumnSpan(viewTitle, 200);
+        
+ 		this.menuSecondaire = new Scene(menu, 300, 250);
+    }
+
+    public void initMenuPrincipal(){
+
+    	//Buttons du menu principal
     	Button newGame = createButton("  Nouvelle partie  ", "0");
-    	Button loadGame = createButton("Continuer la partie", "1");
-        Button exitGame = createButton("  Quitter le jeu   ", "2");
+    	Button resumeGame = createButton("Continuer la partie", "1");
+    	Button loadGame = createButton("Charger la partie", "2");
+        Button exitGame = createButton("  Quitter le jeu   ", "3");
         loadGame.setDisable(true); // permet de désactiver un boutton (utile pour le boutton "Continuer" lorsqu'aucue partie n'est savegardée)
         newGame.setMaxHeight(Double.MAX_VALUE);
         loadGame.setMaxHeight(Double.MAX_VALUE);
@@ -32,8 +81,7 @@ public class MenuInterface extends Application{
         loadGame.setStyle("-fx-font-size: 20pt;");
         exitGame.setStyle("-fx-font-size: 20pt;");
       
-        
-        //Grid
+        //Grid du menu principal
         GridPane menu = new GridPane();
         menu.setHgap(5);
         menu.setVgap(5);
@@ -45,17 +93,10 @@ public class MenuInterface extends Application{
         menu.add(viewTitle, 55, 10);
         GridPane.setColumnSpan(viewTitle, 200);
         
- 	Scene scene = new Scene(menu, 300, 250);
+ 		this.menuPrincipal = new Scene(menu, 300, 250);
 
-        primaryStage.setTitle("Waffle 1.0");
-        primaryStage.setWidth(winWidth);
-        primaryStage.setHeight(winHeight);
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("ressources/waffle.png"));
-        primaryStage.setScene(scene);
-        
-        primaryStage.show();
     }
+
 
     // Fonction qui crée un boutton avec comme texte dessus txt, comme identifiant label et qui associe le handler 
     public Button createButton(String txt, String label){
@@ -73,19 +114,35 @@ public class MenuInterface extends Application{
         @Override
         public void handle(final ActionEvent event) {
             Button b = (Button) event.getSource();
-    	switch(b.getId()){
-    		case "0":
-    			System.out.println("Lancement d'une nouvelle partie");
-    			break;
-    		case "1":
-    			System.out.println("Chargement de la partie en cours");
-    			break;
-                case "2":
-                        System.exit(0);
-                        break;
-    	}
+	    	switch(b.getId()){
+	    		case "0":		// Boutton Du menu principal : Nouvelle partie
+	    			System.out.println("Lancement d'une nouvelle partie");
+	    			break;
+	    		case "1":		// Boutton Du menu principal : Chargement de la partie quitée
+	    			System.out.println("Chargement de la partie en cours");
+	    			break;
+		        case "2":		// Boutton Du menu principal : Chargement de la partie sauvegardé
+		        	System.out.println("Chargement de la partie sauvegardée");
+		        	break;
+		        case "3":		// Boutton Du menu principal : Quitter le jeu
+		            System.exit(0);
+		        	break;		        
+		        case "4":		// Boutton du menu secondaire : lancement d'une nouvelle partie solo 
+		        	System.out.println("Lancement d'une nouvelle partie en solo");
+		        	break;		       
+		        case "5":		// Boutton du menu secondaire : lancement d'une nouvelle partie en versus
+		        	System.out.println("Lancement d'une nouvelle partie en  versus");
+		        	break;
+		        case "6":		// Boutton du menu secondaire : retour au menu principal
+		        	System.out.println("Retour au menu principal");
+		        	break;
+	    	}
         }
     };
+
+    public final Scene getMenuScene () {
+    	return this.menuPrincipal;
+    }
 
  	public static void main(String[] args) {
         launch(args);

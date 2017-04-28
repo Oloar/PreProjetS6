@@ -51,6 +51,35 @@ public class Joueur{
 
 			System.out.println("DEBUG IA EASY {"+i+", "+j+"}");
 			return new Couple(i, j);
+		} else if(this.difficulty == MEDIUM){
+
+			Random rand = new Random();
+
+			int imax = 0;
+			int jmax = 0;
+			int i;
+			int j;
+
+			while(jmax < waffle.getWidth() && this.waffle.getValue(0, jmax) == 0){jmax++;}
+			while(imax < waffle.getHeight() && this.waffle.getValue(imax, 0) == 0){imax++;}
+
+			if(imax == 1 && jmax > 1){
+				i = 0;
+				j = 1;
+			} else if(jmax == 1 && imax > 1){
+				i = 1;
+				j = 0;
+			} else {
+				i = rand.nextInt(imax);
+				j = rand.nextInt(jmax);
+			}
+
+			sleep(1);
+
+			System.out.println("DEBUG IA MEDIUM {"+i+", "+j+"}");
+			return new Couple(i, j);
+
+
 		} else {
 			System.out.println("NOT IMPLEMENTED YET");
 			return new Couple(-1, -1);

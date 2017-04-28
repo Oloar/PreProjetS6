@@ -107,18 +107,16 @@ public class Moteur implements Interface_Moteur {
 		player2 = Integer.parseInt(br.readLine());
 		whoStarted = Integer.parseInt(br.readLine());
 		tempHeight = Integer.parseInt(br.readLine());
-		tempWidth = Integer.parseInt(br.readLine());
+		tempWidth = Integer.parseInt(br.readLine());		
 		if (player1 >=0 && player2 >= 0 && tempHeight >= 0 && whoStarted >= 0 && tempWidth >= 0) { 
 			int [][] tempWaffle = new int[tempHeight][tempWidth];
 			for (int i=0; i<tempHeight; i++) {
 				tempVar = br.readLine();
-				if (!tempVar.matches("[0-9]+")) return false;
+				if (!tempVar.matches("([0-9]+:)+")) return false;
+				
+				String [] moveValues = tempVar.split("[:]");
 				for (int j=0; j<tempWidth; j++) {
-					//if (tempVar.charAt(j) == '-')
-					//	return false;
-					tempWaffle[i][j] = Integer.parseInt(String.valueOf(tempVar.charAt(j)));
-					//if (tempWaffle[i][j] < 0) 
-					//	return false;
+					tempWaffle[i][j] = Integer.parseInt(moveValues[j]);
 				}
 			}
 			Waffle w = new Waffle(tempHeight, tempWidth, tempWaffle);

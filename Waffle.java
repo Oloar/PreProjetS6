@@ -5,10 +5,8 @@ class Waffle {
 	private int height, width;
 
 	public Waffle(int h, int w) {
-		//this.width = (int)Math.pow(3, w);
-		//this.height = (int)Math.pow(2, h);
-		this.width = w;
-		this.height = h;
+		this.width = (int)Math.pow(3, w);
+		this.height = (int)Math.pow(2, h);
 		board = new int[this.height][this.width];
 
 

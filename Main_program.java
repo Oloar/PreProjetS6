@@ -30,8 +30,9 @@ class Main_program {
 					affGraph = true;
 				}
 
-				m = new Moteur(height, width, 0, 1);
-				//m.save("file1"); 
+
+				m = new Moteur(height, width, 0, 2);
+
 				System.out.println("Debut partie");
 
 				System.out.println(m.load("file1"));

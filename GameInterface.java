@@ -1,7 +1,10 @@
+
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -12,12 +15,14 @@ import javafx.stage.Stage;
 
 public class GameInterface extends Application {
 	
+	private final int strokeWidth = 3;
+	
 	private final int winWidth = 1080;
 	private final int winHeight = 720;
 	
 	// -- Tests --
-	private final double arrayWPow = 2;
-	private final double arrayHPow = 1;
+	private final double arrayWPow = 3;
+	private final double arrayHPow = 2;
 	private final int arrayW = (int)Math.pow(2, arrayWPow);
 	private final int arrayH = (int)Math.pow(3, arrayHPow);
 	private final Integer [][]arrayTest = {
@@ -44,9 +49,12 @@ public class GameInterface extends Application {
 		borderPaneInfo.setLeft(gridPanePlayer);
 		borderPaneInfo.setRight(gridPaneButtons);
 		
+		
 		// -- Grille Jeu --
+		gridPaneGame.setMinWidth(winWidth);
+		gridPaneGame.setMinHeight((winHeight/4)*3);
 		gridPaneGame.setMaxWidth(winWidth);
-		gridPaneGame.setMaxHeight(winHeight-208+6);
+		gridPaneGame.setMaxHeight((winHeight/4)*3);
 		gridPaneGame.setAlignment(Pos.CENTER);
 		for (int w=0; w<arrayW; w++) {
 			for (int h=0; h<arrayH; h++) {
@@ -88,22 +96,25 @@ public class GameInterface extends Application {
 						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
 					}
 				}
+				else {
+					gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+				}
 			}
 		}
 		
 		// -- Info Joueurs --
-		Rectangle rectInfo = new Rectangle(0, 0, ((winWidth-6)/2), 208);
+		Rectangle rectInfo = new Rectangle(0, 0, ((winWidth-(strokeWidth*2))/2), ((winHeight/4)-strokeWidth)/*208*/);
 		rectInfo.setFill(Color.LIGHTGREY);
 		rectInfo.setStroke(Color.BLACK);
-		rectInfo.setStrokeWidth(3);
+		rectInfo.setStrokeWidth(strokeWidth);
 		Text textPlayer = new Text("Joueur");
 		textPlayer.setStyle("-fx-font-size: 50pt;");
 		
 		// -- Info Bouttons --
-		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth)/2)-9, 208);
+		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth/2)-strokeWidth), ((winHeight/4)-strokeWidth)/*208*/);
 		rectButton.setFill(Color.LIGHTGREY);
 		rectButton.setStroke(Color.BLACK);
-		rectButton.setStrokeWidth(3);
+		rectButton.setStrokeWidth(strokeWidth);
 		Button buttonUndo = new Button("Undo");
 		Button buttonSave = new Button("Save");
 		Button buttonMenu = new Button("Menu");
@@ -133,14 +144,17 @@ public class GameInterface extends Application {
 		
 		
 		
+		
 		// -- Scene --
-		Scene scene = new Scene(borderPane, 300, 250);
+		Scene scene = new Scene(borderPane, winWidth/*300*/, winHeight/*250*/);
 		
 		primaryStage.setTitle("Waffle 1.0");
 		primaryStage.setWidth(winWidth);
 		primaryStage.setHeight(winHeight);
 		primaryStage.setResizable(false);
+		primaryStage.getIcons().add(new Image("ressources/waffle.png"));
 		primaryStage.setScene(scene);
+		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
 

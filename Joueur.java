@@ -112,6 +112,10 @@ public class Joueur{
 		return retu;
 	}
 
+	public int getNumber(){
+		return this.number;
+	}
+
 
 
 }

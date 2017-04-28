@@ -15,10 +15,10 @@ class Main_program {
 			System.out.println("\t-t : version texte");
 			System.out.println("\t-n : pas d\'affichage");
 		} else {
-			// height = Integer.parseInt(args[0]);
-			// width = Integer.parseInt(args[1]);
-			height = 2;
-			width = 2;
+			height = Integer.parseInt(args[0]);
+			width = Integer.parseInt(args[1]);
+			//height = 2;
+			//width = 2;
 			if(height < 0 || width < 0){
 				System.out.println("Veuillez entrer des tailles de tableau positives");
 			} else {
@@ -33,9 +33,21 @@ class Main_program {
 
 				m = new Moteur(height, width, 0, 2);
 
-				System.out.println("Debut partie");
+				System.out.println("Debut partie"); 
+				//m.save("testSave.txt");
+				//if (m.load("testSave.txt")) m.print_text();
+				m.game(affText, affGraph);
+				
+				System.out.println("\n");
+				if (m.load("testSave.txt")) m.print_text();
 
-				System.out.println(m.load("file1"));
+				m.undo();
+				m.print_text();
+
+				System.out.println(m.load("testSave.txt"));
+
+				m.undo();
+				m.print_text();
 
 				//m.game(affText, affGraph);
 				

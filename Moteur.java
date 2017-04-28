@@ -10,14 +10,19 @@ public class Moteur implements Interface_Moteur {
 	int currentMove;
 	int currentPlayer;
 
+	GameInterface gi;
 
 
-	public Moteur(int height, int width, int player1, int player2){
+
+
+	public Moteur(int height, int width, int player1, int player2, GameInterface g){
 
 		Random rand = new Random();
 		this.whoStart = rand.nextInt(2);
 		this.currentPlayer = this.whoStart;
 		this.currentMove = 0;
+
+		this.gi = g;
 
 		this.waffle = new Waffle(height, width);
 
@@ -45,7 +50,7 @@ public class Moteur implements Interface_Moteur {
 					}
 				}
 				currentPlayer = (currentPlayer+1) % 2;
-				update_graphic();
+				this.update_graphic();
 				eaten = true;
 			} 
 		} else {
@@ -162,6 +167,7 @@ public class Moteur implements Interface_Moteur {
 
 	public void update_graphic(){
 		// appel a IHM
+		gi.updateGame(this.getGauffre(), arrayPlayer[currentPlayer], currentMove);
 	}
 
 	/*public boolean isFinished(){
@@ -172,19 +178,13 @@ public class Moteur implements Interface_Moteur {
 
 		int i, j;
 
+		this.update_graphic();		
+
 		while(!this.waffle.isAWin()){
 			if(affText){
 				this.print_text();
 			}
-			if(affGraph){
-				// not implemented
-			}
-			Couple c;
-
-			do {
-				c = arrayPlayer[currentPlayer].getCase();
-
-			} while(!this.eat(c.i(), c.j()));
+			
 		}
 
 		this.save("testSave.txt");
@@ -204,6 +204,10 @@ public class Moteur implements Interface_Moteur {
 			}
 		}
 		return retu;
+	}
+
+	public boolean isIA(){
+		return (arrayPlayer[currentPlayer].getDifficulty() > 0);
 	}
 
 	public int getHeightWaffle(){

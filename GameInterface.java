@@ -30,6 +30,9 @@ public class GameInterface extends Application {
 	
 	private int widthWaffle;
 	private int heightWaffle;
+
+	private Moteur m;
+
 	
 	// -- Tests --
 	//private final double arrayWPow = 3;
@@ -49,9 +52,11 @@ public class GameInterface extends Application {
 	
 	
 	
-	public void initGameInterface (int widthWaffle, int heightWaffle) {
-		this.widthWaffle = widthWaffle;
-		this.heightWaffle = heightWaffle;
+	public void initGameInterface (Moteur mo) {
+		this.m = mo;
+		this.widthWaffle = m.getWidthWaffle();
+		this.heightWaffle = m.getHeightWaffle();
+
 	}
 	
 	
@@ -68,56 +73,56 @@ public class GameInterface extends Application {
 	
 	
 	
-	public void updateGame (Integer [][]arrayGame, Joueur player, int turnNumber) {
+	public void updateGame (int [][]arrayGame, Joueur player, int turnNumber) {
 		for (int w=0; w<widthWaffle; w++) {
 			for (int h=0; h<heightWaffle; h++) {
 				if (arrayGame[h][w] == 0) {
 					// Haut Gauche
 					if (w == 0  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Gauche
 					else if (w == 0  &&  h != heightWaffle-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Bas Gauche
 					else if (w == 0  &&  h == heightWaffle-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Haut
 					else if (w != widthWaffle-1  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_top.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Bas
 					else if (w != widthWaffle-1  &&  h == heightWaffle-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Haut Droite
 					else if (w == widthWaffle-1  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Droite
 					else if (w == widthWaffle-1  &&  h != heightWaffle-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Bas Droite
 					else if (w == widthWaffle-1  &&  h == heightWaffle-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					// Centre
 					else {
-						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 				}
 				else if (arrayGame[h][w] != 0  &&  arrayGame[h][w] == turnNumber) {
 					if (player.getNumber() == 1) {
-						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					else if (player.getNumber() == 2) {
-						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					else {
-						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 				}
 			}

@@ -7,6 +7,8 @@ class Main_program {
 		boolean affText = false, affGraph = false;
 		int height, width;
 		Moteur m;
+		MenuInterface mi = new MenuInterface();
+		GameInterface gi = new GameInterface();
 
 		if(args.length < 1){
 			System.out.println("Erreur syntaxe : java Main_program <Hauteur> <Largeur> <Mode>");
@@ -30,24 +32,27 @@ class Main_program {
 					affGraph = true;
 				}
 
+				mi.main(args);
 
-				m = new Moteur(height, width, 0, 2);
+				m = new Moteur(height, width, 0, 2, gi);
+				// gi.initGameInterface(m);
 
-				System.out.println("Debut partie"); 
-				//m.save("testSave.txt");
-				//if (m.load("testSave.txt")) m.print_text();
-				m.game(affText, affGraph);
+
+				// System.out.println("Debut partie"); 
+				// //m.save("testSave.txt");
+				// //if (m.load("testSave.txt")) m.print_text();
+				// m.game(affText, affGraph);
 				
-				System.out.println("\n");
-				if (m.load("testSave.txt")) m.print_text();
+				// System.out.println("\n");
+				// if (m.load("testSave.txt")) m.print_text();
 
-				m.undo();
-				m.print_text();
+				// m.undo();
+				// m.print_text();
 
-				System.out.println(m.load("testSave.txt"));
+				// System.out.println(m.load("testSave.txt"));
 
-				m.undo();
-				m.print_text();
+				// m.undo();
+				// m.print_text();
 
 				//m.game(affText, affGraph);
 				

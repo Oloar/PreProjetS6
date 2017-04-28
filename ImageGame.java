@@ -14,8 +14,12 @@ public class ImageGame {
 	
 	private Integer clickX;
 	private Integer clickY;
+
+	ImageGame(){
+		this.img = new Image("ressources/blanck.png");
+	}
 	
-	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH) {
+	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH, Moteur m) {
 		this.img = resample(new Image(ressource), 20);
 		this.setImgView(new ImageView(this.img));
 		this.getImgView().setFitWidth(((int)paneW/waffleW));
@@ -25,6 +29,12 @@ public class ImageGame {
 			public void handle(MouseEvent event) {
 				clickX = GridPane.getColumnIndex(ImageGame.this.getImgView());
 				clickY = GridPane.getRowIndex(ImageGame.this.getImgView());
+
+				if(!m.isIA()){
+					m.eat(clickY, clickX); 
+				}
+
+
 				System.out.println("Node: " + ImageGame.this.getImgView() + " at " + GridPane.getRowIndex(ImageGame.this.getImgView()) + "/" + GridPane.getColumnIndex(ImageGame.this.getImgView()));
 			}
 		});

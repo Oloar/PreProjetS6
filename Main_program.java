@@ -30,12 +30,17 @@ class Main_program {
 					affGraph = true;
 				}
 
+
 				m = new Moteur(height, width, 0, 2);
 
 				System.out.println("Debut partie");
 
-				m.game(affText, affGraph);
+				System.out.println(m.load("file1"));
 
+				//m.game(affText, affGraph);
+				
+								
+				
 				System.out.println("Partie terminée");
 			}
 		}

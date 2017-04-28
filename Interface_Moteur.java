@@ -12,7 +12,7 @@ public interface Interface_Moteur {
 	public void save(String filename);
 
 	// Charge une partie en fonction du contenu du fichier filename
-	public void load(String filename);
+	public boolean load(String filename);
 
 	// annule le dernier coup effectué
 	public void undo();

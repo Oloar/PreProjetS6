@@ -1,3 +1,4 @@
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -11,12 +12,34 @@ public class ImageGame {
 	private final Image img;
 	private ImageView imgView;
 	
+	private Integer clickX;
+	private Integer clickY;
+	
 	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH) {
 		this.img = resample(new Image(ressource), 20);
 		this.setImgView(new ImageView(this.img));
 		this.getImgView().setFitWidth(((int)paneW/waffleW));
 		this.getImgView().setFitHeight(((int)paneH/waffleH));
-		this.getImgView().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> System.out.println( "Node: " + this.getImgView() + " at " + GridPane.getRowIndex(this.getImgView()) + "/" + GridPane.getColumnIndex(this.getImgView())));
+		this.getImgView().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				clickX = GridPane.getColumnIndex(ImageGame.this.getImgView());
+				clickY = GridPane.getRowIndex(ImageGame.this.getImgView());
+				System.out.println("Node: " + ImageGame.this.getImgView() + " at " + GridPane.getRowIndex(ImageGame.this.getImgView()) + "/" + GridPane.getColumnIndex(ImageGame.this.getImgView()));
+			}
+		});
+	}
+	
+	
+	
+	public Integer getClickX () {
+		return clickX;
+	}
+	
+	
+	
+	public Integer getClickY () {
+		return clickY;
 	}
 
 	

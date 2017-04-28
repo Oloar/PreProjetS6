@@ -4,7 +4,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -187,6 +186,8 @@ public class GameInterface extends Application {
 		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				primaryStage.setWidth(primaryStage.getWidth());
+				primaryStage.setHeight(primaryStage.getHeight());
 				primaryStage.setScene(fetchMenuScene());
 				System.out.println("Return to Menu...");
 			}
@@ -214,11 +215,7 @@ public class GameInterface extends Application {
 		// -- Scene --
 		gameScene = new Scene(borderPane, winWidth, winHeight);
 		
-		/*primaryStage.setTitle("Waffle 1.0");
-		primaryStage.setWidth(winWidth);
-		primaryStage.setHeight(winHeight);*/
 		primaryStage.setResizable(false);
-		/*primaryStage.getIcons().add(new Image("ressources/waffle.png"));*/
 		primaryStage.setScene(gameScene);
 		primaryStage.sizeToScene();
 		primaryStage.show();

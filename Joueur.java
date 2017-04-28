@@ -67,6 +67,10 @@ public class Joueur{
 		}
 	}
 
+	public int getDifficulty() {
+		return this.difficulty;
+	}
+
 	public String toString(){
 
 		String retu = "";

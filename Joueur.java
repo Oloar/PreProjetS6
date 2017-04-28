@@ -2,9 +2,10 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.io.*;
+import java.lang.Exception;
 
 
-public class Joueur {
+public class Joueur{
 
 	final int HUMAN = 0;
 	final int EASY = 1;
@@ -37,16 +38,33 @@ public class Joueur {
 
 			Random rand = new Random();
 
-			int i = rand.nextInt(waffle.getHeight());
-			int j = rand.nextInt(waffle.getWidth());
+			int imax = 0;
+			int jmax = 0;
 
+			while(jmax < waffle.getWidth() && this.waffle.getValue(0, jmax) == 0){jmax++;}
+			while(imax < waffle.getHeight() && this.waffle.getValue(imax, 0) == 0){imax++;}
+
+			int i = rand.nextInt(imax);
+			int j = rand.nextInt(jmax);
+
+			sleep(1);
+
+			System.out.println("DEBUG IA EASY {"+i+", "+j+"}");
 			return new Couple(i, j);
 		} else {
-			System.out.println("NOT IMPLEMENT YET");
+			System.out.println("NOT IMPLEMENTED YET");
 			return new Couple(-1, -1);
 		}
 
 
+	}
+
+	public void sleep(int n){
+		try {
+			Thread.sleep(n*1000);	
+		} catch(Exception e){
+			System.err.println("Erreur Sleep");
+		}
 	}
 
 	public String toString(){

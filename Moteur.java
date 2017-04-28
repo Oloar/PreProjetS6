@@ -28,7 +28,9 @@ public class Moteur implements Interface_Moteur {
 	}
 
 
-	public void eat(int i, int j){
+	public boolean eat(int i, int j){
+
+		boolean eaten = false;
 
 		if(this.waffle.isInWaffle(i, j)){
 			if(this.waffle.isEatable(i, j)){
@@ -44,12 +46,13 @@ public class Moteur implements Interface_Moteur {
 				}
 				currentPlayer = (currentPlayer+1) % 2;
 				update_graphic();
-			} else {
-				System.out.println("Déjà mangé");
-			}
+				eaten = true;
+			} 
 		} else {
 			System.out.println("OutOfGauffreException");
 		}
+
+		return eaten;
 	}
 
 	public void save(String filename){
@@ -99,16 +102,12 @@ public class Moteur implements Interface_Moteur {
 
 	public void print_text(){
 
-		System.out.println(this.arrayPlayer[0]);
-		System.out.println(this.arrayPlayer[1]);
-		System.out.println(this.arrayPlayer[this.whoStart]+" a commencé");
-		System.out.println("C\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
+		// System.out.println(this.arrayPlayer[0]);
+		// System.out.println(this.arrayPlayer[1]);
+		// System.out.println(this.arrayPlayer[this.whoStart]+" a commencé");
+		System.out.println("\n\nC\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
 		System.out.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
 
-		System.out.print(" ");
-		for(int i=0;  i<this.waffle.getHeight(); i++){
-
-		}
 
 		for(int i=0; i<this.waffle.getHeight(); i++){
 			for(int j=0; j<this.waffle.getWidth(); j++){
@@ -138,13 +137,15 @@ public class Moteur implements Interface_Moteur {
 			if(affGraph){
 				// not implemented
 			}
+			Couple c;
 
-			Couple c = arrayPlayer[currentPlayer].getCase();
+			do {
+				c = arrayPlayer[currentPlayer].getCase();
 
-			this.eat(c.i(), c.j());
+			} while(!this.eat(c.i(), c.j()));
 		}
 
-		System.out.println(arrayPlayer[(currentPlayer+1%2)]+" a gagné");
+		System.out.println(arrayPlayer[currentPlayer]+" a gagné");
 
 	}
 

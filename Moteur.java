@@ -186,4 +186,30 @@ public class Moteur implements Interface_Moteur {
 
 	}
 
+	public int [][] getGauffre(){
+		int height = waffle.getHeight();
+		int width = waffle.getWidth();
+
+		int [][] retu = new int[height][width];
+
+		for(int i=0; i<height; i++){
+			for(int j=0; j<height; j++){
+				retu[i][j] = waffle.getValue(i, j);
+			}
+		}
+		return retu;
+	}
+
+	public int getHeightWaffle(){
+		return waffle.getHeight();
+	}
+
+	public int getWidthWaffle(){
+		return waffle.getWidth();
+	}
+
+	public String getPlayer(){
+		return arrayPlayer[currentPlayer].toString();
+	}
+
 }

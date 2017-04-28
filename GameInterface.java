@@ -18,18 +18,25 @@ public class GameInterface extends Application {
 	
 	private Scene gameScene;
 	
+	private GridPane gridPaneGame;
+	private GridPane gridPanePlayer;
+	
+	private Text textNumPlayer;
+	
 	private final int STROKE_WIDTH = 3;
 	
 	private final int winWidth = 1080;
 	private final int winHeight = 720;
 	
+	private int widthWaffle;
+	private int heightWaffle;
+	
 	// -- Tests --
-	private int player = 1;
-	private final double arrayWPow = 3;
-	private final double arrayHPow = 2;
-	private final int arrayW = (int)Math.pow(2, arrayWPow);
-	private final int arrayH = (int)Math.pow(3, arrayHPow);
-	private final Integer [][]arrayTest = {
+	//private final double arrayWPow = 3;
+	//private final double arrayHPow = 2;
+	//private final int widthWaffle = (int)Math.pow(2, arrayWPow);
+	//private final int heightWaffle = (int)Math.pow(3, arrayHPow);
+	/*private final Integer [][]arrayTest = {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
@@ -38,11 +45,18 @@ public class GameInterface extends Application {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0}};
+		{0, 0, 0, 0, 0, 0, 0, 0}};*/
 	
 	
 	
-	public Scene getGameScene() {
+	public void initGameInterface (int widthWaffle, int heightWaffle) {
+		this.widthWaffle = widthWaffle;
+		this.heightWaffle = heightWaffle;
+	}
+	
+	
+	
+	public Scene getGameScene () {
 		return gameScene;
 	}
 	
@@ -54,60 +68,74 @@ public class GameInterface extends Application {
 	
 	
 	
-	private void updateGame (GridPane gridPaneGame, Integer [][]arrayGame) {
-		for (int w=0; w<arrayW; w++) {
-			for (int h=0; h<arrayH; h++) {
+	public void updateGame (Integer [][]arrayGame, Joueur player, int turnNumber) {
+		for (int w=0; w<widthWaffle; w++) {
+			for (int h=0; h<heightWaffle; h++) {
 				if (arrayGame[h][w] == 0) {
 					// Haut Gauche
 					if (w == 0  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Gauche
-					else if (w == 0  &&  h != arrayH-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w == 0  &&  h != heightWaffle-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Bas Gauche
-					else if (w == 0  &&  h == arrayH-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w == 0  &&  h == heightWaffle-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Haut
-					else if (w != arrayW-1  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w != widthWaffle-1  &&  h == 0) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_top.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Bas
-					else if (w != arrayW-1  &&  h == arrayH-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w != widthWaffle-1  &&  h == heightWaffle-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Haut Droite
-					else if (w == arrayW-1  &&  h == 0) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_top_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w == widthWaffle-1  &&  h == 0) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_top_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Droite
-					else if (w == arrayW-1  &&  h != arrayH-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w == widthWaffle-1  &&  h != heightWaffle-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Bas Droite
-					else if (w == arrayW-1  &&  h == arrayH-1) {
-						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (w == widthWaffle-1  &&  h == heightWaffle-1) {
+						gridPaneGame.add(new ImageGame("ressources/waffle_bottom_right.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					// Centre
 					else {
-						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 				}
-				else {
-					if (player == 1) {
-						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+				else if (arrayGame[h][w] != 0  &&  arrayGame[h][w] == turnNumber) {
+					if (player.getNumber() == 1) {
+						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
-					else if (player == 2) {
-						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					else if (player.getNumber() == 2) {
+						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 					else {
-						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle).getImgView(), w, h);
 					}
 				}
 			}
 		}
+		
+		if (player.getNumber() == 1) {
+			textNumPlayer = new Text("1");
+		}
+		else if (player.getNumber() == 2) {
+			textNumPlayer = new Text("2");
+		}
+		else {
+			textNumPlayer = new Text("0");
+		}
+		
+		textNumPlayer.setStyle("-fx-font-size: 50pt;");
+		gridPanePlayer.add(textNumPlayer, 102, 0);
+		
 	}
 	
 	
@@ -115,11 +143,12 @@ public class GameInterface extends Application {
 	@Override
 	@SuppressWarnings("Convert2Lambda")
 	public void start(Stage primaryStage) {
+		
 		// -- Panes Initialisation --
 		BorderPane borderPane = new BorderPane();
 		BorderPane borderPaneInfo = new BorderPane();
-		GridPane gridPaneGame = new GridPane();
-		GridPane gridPanePlayer = new GridPane();
+		gridPaneGame = new GridPane();
+		gridPanePlayer = new GridPane();
 		GridPane gridPaneButtons = new GridPane();
 		
 		borderPane.setTop(gridPaneGame);
@@ -134,7 +163,8 @@ public class GameInterface extends Application {
 		gridPaneGame.setMaxWidth(winWidth);
 		gridPaneGame.setMaxHeight((winHeight/4)*3);
 		gridPaneGame.setAlignment(Pos.CENTER);
-		updateGame(gridPaneGame, arrayTest);
+		// -- Tests --
+		//updateGame(arrayTest);
 		
 		
 		
@@ -222,9 +252,9 @@ public class GameInterface extends Application {
 	}
 	
 	
-	
-	public static void main(String[] args) {
+	// Main is in MenuInterface
+	/*public static void main(String[] args) {
 		launch(args);
-	}
+	}*/
 	
 }

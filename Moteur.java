@@ -58,10 +58,11 @@ public class Moteur implements Interface_Moteur {
 	public void save(String filename){
 		try{
 			PrintWriter saveFile = new PrintWriter(filename, "UTF-8");
-			saveFile.println("Joueur 1 : "+this.arrayPlayer[0]);
-			saveFile.println("Joueur 2 : "+this.arrayPlayer[1]);
-			saveFile.println("Joueur "+this.whoStart+" a commencé");
-			saveFile.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
+			saveFile.println(this.arrayPlayer[0].getDifficulty());
+			saveFile.println(this.arrayPlayer[1].getDifficulty());
+			saveFile.println(this.whoStart);
+			saveFile.println(this.waffle.getHeight());
+			saveFile.println(this.waffle.getWidth());
 			for(int i=0; i<this.waffle.getHeight(); i++){
 				for(int j=0; j<this.waffle.getWidth(); j++){
 					saveFile.print(this.waffle.getValue(i, j));
@@ -145,6 +146,7 @@ public class Moteur implements Interface_Moteur {
 			} while(!this.eat(c.i(), c.j()));
 		}
 
+		this.save("testSave.txt");
 		System.out.println(arrayPlayer[currentPlayer]+" a gagné");
 
 	}

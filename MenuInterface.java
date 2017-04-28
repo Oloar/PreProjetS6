@@ -33,15 +33,6 @@ public class MenuInterface extends Application{
     	Button solo = createButton("Solo", "4");
     	Button versus = createButton("Versus", "5");
         Button retour = createButton("Retour", "6");
-        solo.setMaxHeight(Double.MAX_VALUE);
-        versus.setMaxHeight(Double.MAX_VALUE);
-        retour.setMaxHeight(Double.MAX_VALUE);
-        solo.setMinWidth(300);
-        versus.setMinWidth(300);
-        retour.setMinWidth(300);
-        solo.setStyle("-fx-font-size: 20pt;");
-        versus.setStyle("-fx-font-size: 20pt;");
-        retour.setStyle("-fx-font-size: 20pt;");
       
         //Grid du menu secondaire
         GridPane menu = new GridPane();
@@ -67,23 +58,16 @@ public class MenuInterface extends Application{
     	Button loadGame = createButton("Charger la partie", "2");
         Button exitGame = createButton("  Quitter le jeu   ", "3");
         loadGame.setDisable(true); // permet de désactiver un boutton (utile pour le boutton "Continuer" lorsqu'aucue partie n'est savegardée)
-        newGame.setMaxHeight(Double.MAX_VALUE);
-        loadGame.setMaxHeight(Double.MAX_VALUE);
-        exitGame.setMaxHeight(Double.MAX_VALUE);
-        newGame.setMinWidth(300);
-        loadGame.setMinWidth(300);
-        exitGame.setMinWidth(300);
-        newGame.setStyle("-fx-font-size: 20pt;");
-        loadGame.setStyle("-fx-font-size: 20pt;");
-        exitGame.setStyle("-fx-font-size: 20pt;");
-      
+        resumeGame.setDisable(true);
+
         //Grid du menu principal
         GridPane menu = new GridPane();
         menu.setHgap(5);
         menu.setVgap(5);
         menu.add(newGame,75,30);
-        menu.add(loadGame,75,35);
-        menu.add(exitGame,75,40);
+        menu.add(resumeGame,75,35);
+        menu.add(loadGame, 75, 40);
+        menu.add(exitGame,75,45);
         Image imgTitle = new Image("ressources/waffle_title.png");
         ImageView viewTitle = new ImageView(imgTitle);
         menu.add(viewTitle, 55, 10);
@@ -108,6 +92,9 @@ public class MenuInterface extends Application{
     	Button b = new Button(txt);
     	b.setId(label);
     	b.setOnAction(handler);
+    	b.setMinWidth(300);
+    	b.setMaxHeight(Double.MAX_VALUE);
+    	b.setStyle("-fx-font-size: 20pt;");
     	return b;
     }
 	
@@ -149,7 +136,8 @@ public class MenuInterface extends Application{
 		        case "3":		// Boutton Du menu principal : Quitter le jeu
 		            System.exit(0);
 		        	break;		        
-		        case "4":		// Boutton du menu secondaire : lancement d'une nouvelle partie solo 
+		        case "4":		// Boutton du menu secondaire : lancement d'une nouvelle partie solo
+		        	startGame(); 
 		        	System.out.println("Lancement d'une nouvelle partie en solo");
 		        	break;		       
 		        case "5":		// Boutton du menu secondaire : lancement d'une nouvelle partie en versus

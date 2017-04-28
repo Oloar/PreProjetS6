@@ -43,6 +43,12 @@ public class GameInterface extends Application {
 	
 	
 	
+	public Scene getGameScene() {
+		return gameScene;
+	}
+	
+	
+	
 	private static Scene fetchMenuScene () {
 		return new MenuInterface().getMenuScene();
 	}
@@ -208,20 +214,14 @@ public class GameInterface extends Application {
 		// -- Scene --
 		gameScene = new Scene(borderPane, winWidth, winHeight);
 		
-		primaryStage.setTitle("Waffle 1.0");
+		/*primaryStage.setTitle("Waffle 1.0");
 		primaryStage.setWidth(winWidth);
-		primaryStage.setHeight(winHeight);
+		primaryStage.setHeight(winHeight);*/
 		primaryStage.setResizable(false);
-		primaryStage.getIcons().add(new Image("ressources/waffle.png"));
+		/*primaryStage.getIcons().add(new Image("ressources/waffle.png"));*/
 		primaryStage.setScene(gameScene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
-	}
-	
-	
-	
-	public Scene getGameScene() {
-		return gameScene;
 	}
 	
 	

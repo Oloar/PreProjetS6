@@ -19,11 +19,11 @@ public class MenuInterface extends Application{
 
     @Override
     public void start(Stage primaryStage) {
-        this.stage = primaryStage;
+        stage = primaryStage;
         this.initMenuPrincipal();
         this.initMenuSecondaire();
         this.initStage();
-        this.stage.show();
+        stage.show();
     }
 
     // initialisation du menu secondaire
@@ -55,7 +55,7 @@ public class MenuInterface extends Application{
         menu.add(viewTitle, 55, 10);
         GridPane.setColumnSpan(viewTitle, 200);
         
- 		this.menuSecondaire = new Scene(menu, 300, 250);
+ 		menuSecondaire = new Scene(menu, 300, 250);
     }
 
     // initialisation du menu principal
@@ -89,18 +89,18 @@ public class MenuInterface extends Application{
         menu.add(viewTitle, 55, 10);
         GridPane.setColumnSpan(viewTitle, 200);
         
- 		this.menuPrincipal = new Scene(menu, 300, 250);
+ 		menuPrincipal = new Scene(menu, 300, 250);
 
     }
 
     // initialise le stage
     private void initStage(){
-    	this.stage.setTitle("Waffle 1.0");
-        this.stage.setWidth(winWidth);
-        this.stage.setHeight(winHeight);
-        this.stage.setResizable(false);
-        this.stage.getIcons().add(new Image("ressources/waffle.png"));
-        this.stage.setScene(this.menuPrincipal);
+    	stage.setTitle("Waffle 1.0");
+        stage.setWidth(winWidth);
+        stage.setHeight(winHeight);
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("ressources/waffle.png"));
+        stage.setScene(menuPrincipal);
     }
 
     // Fonction qui crée un boutton avec comme texte dessus txt, comme identifiant label et qui associe le handler 
@@ -110,14 +110,23 @@ public class MenuInterface extends Application{
     	b.setOnAction(handler);
     	return b;
     }
+	
+	public Scene getMenuScene(){
+		return menuPrincipal;
+	}
 
-    public final Scene fetchGameScene(){
-    	return GameInterface.getGameScene();
+    private static Scene fetchGameScene(){
+    	return new GameInterface().getGameScene();
     }
+	
+	private static void startGame(){
+		new GameInterface().start(stage);
+	}
 
     // Handler qui traite les events des différents bouttons. Pour l'instant :
     // "0" => boutton de nouvelle partie
     // "1" => boutton pour charger la partie sauvegardée (si elle existe)
+	@SuppressWarnings("Convert2Lambda")
     final EventHandler<ActionEvent> handler = new EventHandler<ActionEvent>(){
 
         @Override
@@ -127,10 +136,11 @@ public class MenuInterface extends Application{
             Button b = (Button) event.getSource();
 	    	switch(b.getId()){
 	    		case "0":		// Boutton Du menu principal : Nouvelle partie
+					stage.setScene(menuSecondaire);
 	    			System.out.println("Lancement d'une nouvelle partie");
-	    			
 	    			break;
 	    		case "1":		// Boutton Du menu principal : Chargement de la partie quitée
+					stage.setScene(fetchGameScene());
 	    			System.out.println("Chargement de la partie en cours");
 	    			break;
 		        case "2":		// Boutton Du menu principal : Chargement de la partie sauvegardé
@@ -143,9 +153,11 @@ public class MenuInterface extends Application{
 		        	System.out.println("Lancement d'une nouvelle partie en solo");
 		        	break;		       
 		        case "5":		// Boutton du menu secondaire : lancement d'une nouvelle partie en versus
+					startGame();
 		        	System.out.println("Lancement d'une nouvelle partie en  versus");
 		        	break;
 		        case "6":		// Boutton du menu secondaire : retour au menu principal
+					stage.setScene(menuPrincipal);
 		        	System.out.println("Retour au menu principal");
 		        	break;
 	    	}

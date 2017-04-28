@@ -1,11 +1,12 @@
 import java.util.Random;
 import java.io.*;
+import java.util.Scanner;
 
 public class Moteur implements Interface_Moteur {
 
 	Waffle waffle;
 	int whoStart;
-	int arrayPlayer[];
+	Joueur arrayPlayer[];
 	int currentMove;
 	int currentPlayer;
 
@@ -14,35 +15,44 @@ public class Moteur implements Interface_Moteur {
 	public Moteur(int height, int width, int player1, int player2){
 
 		Random rand = new Random();
-		this.whoStart = rand.nextInt(2)+1;
+		this.whoStart = rand.nextInt(2);
 		this.currentPlayer = this.whoStart;
 		this.currentMove = 0;
 
-		this.arrayPlayer = new int[2];
-		this.arrayPlayer[0] = player1;
-		this.arrayPlayer[1] = player2;
-
 		this.waffle = new Waffle(height, width);
+
+		this.arrayPlayer = new Joueur[2];
+		this.arrayPlayer[0] = new Joueur(1, player1, this.waffle);
+		this.arrayPlayer[1] = new Joueur(2, player2, this.waffle);
+
 	}
 
 
-	public void eat(int i, int j){
+	public boolean eat(int i, int j){
+
+		boolean eaten = false;
 
 		if(this.waffle.isInWaffle(i, j)){
-			// Incremente le compteur de coups
-			currentMove++;
-			for(int row = i; row < waffle.getHeight(); row++) {
-				for(int col = j; col < waffle.getWidth(); col++) {
-					if(waffle.isEatable(row, col)) {
-						waffle.eatCase(row, col, currentMove);
+			if(this.waffle.isEatable(i, j)){
+
+				// Incremente le compteur de coups
+				currentMove++;
+				for(int row = i; row < waffle.getHeight(); row++) {
+					for(int col = j; col < waffle.getWidth(); col++) {
+						if(waffle.isEatable(row, col)) {
+							waffle.eatCase(row, col, currentMove);
+						}
 					}
 				}
-			}
-			currentPlayer = (currentPlayer+1) % 2;
-			update_graphic();
+				currentPlayer = (currentPlayer+1) % 2;
+				update_graphic();
+				eaten = true;
+			} 
 		} else {
 			System.out.println("OutOfGauffreException");
 		}
+
+		return eaten;
 	}
 
 	public void save(String filename){
@@ -92,11 +102,13 @@ public class Moteur implements Interface_Moteur {
 
 	public void print_text(){
 
-		System.out.println("Joueur 1 : "+this.arrayPlayer[0]);
-		System.out.println("Joueur 2 : "+this.arrayPlayer[1]);
-		System.out.println("Joueur "+this.whoStart+" a commencé");
-		System.out.println("C\'est au tour de Joueur "+(this.currentPlayer+1));
+		// System.out.println(this.arrayPlayer[0]);
+		// System.out.println(this.arrayPlayer[1]);
+		// System.out.println(this.arrayPlayer[this.whoStart]+" a commencé");
+		System.out.println("\n\nC\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
 		System.out.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
+
+
 		for(int i=0; i<this.waffle.getHeight(); i++){
 			for(int j=0; j<this.waffle.getWidth(); j++){
 				System.out.print(this.waffle.getValue(i, j));
@@ -110,8 +122,31 @@ public class Moteur implements Interface_Moteur {
 		// appel a IHM
 	}
 
-	public boolean isFinished(){
+	/*public boolean isFinished(){
 		return this.waffle.isAWin();
+	}*/
+
+	public void game(boolean affText, boolean affGraph){
+
+		int i, j;
+
+		while(!this.waffle.isAWin()){
+			if(affText){
+				this.print_text();
+			}
+			if(affGraph){
+				// not implemented
+			}
+			Couple c;
+
+			do {
+				c = arrayPlayer[currentPlayer].getCase();
+
+			} while(!this.eat(c.i(), c.j()));
+		}
+
+		System.out.println(arrayPlayer[currentPlayer]+" a gagné");
+
 	}
 
 }

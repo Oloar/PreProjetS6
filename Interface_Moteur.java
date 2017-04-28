@@ -2,7 +2,7 @@ import java.io.*;
 public interface Interface_Moteur {
 
 	// fonction qui va manger (affecter un numéro aux case en bas a droite de i, j)
-	public void eat(int i, int j);
+	public boolean eat(int i, int j);
 
 	// crée un fichier contenant toutes les informations de la partie en cours
 	// Type de joueurs

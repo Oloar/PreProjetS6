@@ -18,6 +18,21 @@ class Waffle {
 		}
 	}
 
+	public Waffle(int h, int w, int[][] tempBoard) {
+		this.width = w;
+		this.height = h;
+		board = new int[this.height][this.width];
+		board = tempBoard;
+
+
+		// Initialise la gauffre à 0
+		/*for (int row=0; row < this.height; row++) {
+			for (int col=0; col < this.width; col++) {
+				this.board[row][col] = 0;
+			}
+		}*/
+	}
+
 	// Renvoie la valeur de la case (row, col)
 	public int getValue(int row, int col) {
 		return this.board[row][col];

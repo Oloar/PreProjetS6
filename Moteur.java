@@ -93,8 +93,45 @@ public class Moteur implements Interface_Moteur {
 		}
 	}
 
-	public void load(String filename){
-
+	public boolean load(String filename){
+		try {
+                FileReader filereader = new FileReader(filename);
+		BufferedReader br = new BufferedReader(filereader);
+                String tempVar;
+		int tempHeight, tempWidth, player1, player2, whoStarted;
+		player1 = Integer.parseInt(br.readLine());
+		player2 = Integer.parseInt(br.readLine());
+		whoStarted = Integer.parseInt(br.readLine());
+		tempHeight = Integer.parseInt(br.readLine());
+		tempWidth = Integer.parseInt(br.readLine());
+		if (player1 >=0 && player2 >= 0 && tempHeight >= 0 && whoStarted >= 0 && tempWidth >= 0) { 
+			int [][] tempWaffle = new int[tempHeight][tempWidth];
+			for (int i=0; i<tempHeight; i++) {
+				tempVar = br.readLine();
+				if (!tempVar.matches("[0-9]+")) return false;
+				for (int j=0; j<tempWidth; j++) {
+					//if (tempVar.charAt(j) == '-')
+					//	return false;
+					tempWaffle[i][j] = Integer.parseInt(String.valueOf(tempVar.charAt(j)));
+					//if (tempWaffle[i][j] < 0) 
+					//	return false;
+				}
+			}
+			Waffle w = new Waffle(tempHeight, tempWidth, tempWaffle);
+			this.waffle = w;
+                	this.arrayPlayer[0] = new Joueur(1, player1, this.waffle); ;
+			this.arrayPlayer[1] = new Joueur(2, player2, this.waffle);
+                	this.whoStart = whoStarted;
+			
+			//print_text();  
+		}
+		else 
+			return false;              
+                }
+                catch (Exception e) {
+                	System.out.println(e);
+                }
+		return true;
 	}
 
 	public void print_text(){
@@ -105,10 +142,10 @@ public class Moteur implements Interface_Moteur {
 		System.out.println("C\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
 		System.out.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
 
-		System.out.print(" ");
-		for(int i=0;  i<this.waffle.getHeight(); i++){
+		//System.out.print(" ");
+		/*for(int i=0;  i<this.waffle.getHeight(); i++){
 
-		}
+		}*/
 
 		for(int i=0; i<this.waffle.getHeight(); i++){
 			for(int j=0; j<this.waffle.getWidth(); j++){

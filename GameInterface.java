@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 
 public class GameInterface extends Application {
 	
+	private Scene gameScene;
+	
 	private final int STROKE_WIDTH = 3;
 	
 	private final int winWidth = 1080;
@@ -37,6 +39,8 @@ public class GameInterface extends Application {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0}};
+	
+	
 	
 	private void updateGame (GridPane gridPaneGame, Integer [][]arrayGame) {
 		for (int w=0; w<arrayW; w++) {
@@ -85,6 +89,7 @@ public class GameInterface extends Application {
 			}
 		}
 	}
+	
 	
 	
 	@Override
@@ -161,6 +166,7 @@ public class GameInterface extends Application {
 		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				// TODO - primaryStage.setScene(MenuInterface.getScene());
 				System.out.println("Return to Menu...");
 			}
 		});
@@ -185,18 +191,26 @@ public class GameInterface extends Application {
 		
 		
 		// -- Scene --
-		Scene scene = new Scene(borderPane, winWidth, winHeight);
+		gameScene = new Scene(borderPane, winWidth, winHeight);
 		
 		primaryStage.setTitle("Waffle 1.0");
 		primaryStage.setWidth(winWidth);
 		primaryStage.setHeight(winHeight);
 		primaryStage.setResizable(false);
 		primaryStage.getIcons().add(new Image("ressources/waffle.png"));
-		primaryStage.setScene(scene);
+		primaryStage.setScene(gameScene);
 		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
-
+	
+	
+	
+	public final Scene getGameScene() {
+		return gameScene;
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		launch(args);
 	}

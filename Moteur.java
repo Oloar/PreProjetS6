@@ -65,7 +65,7 @@ public class Moteur implements Interface_Moteur {
 			saveFile.println(this.waffle.getWidth());
 			for(int i=0; i<this.waffle.getHeight(); i++){
 				for(int j=0; j<this.waffle.getWidth(); j++){
-					saveFile.print(this.waffle.getValue(i, j));
+					saveFile.print(this.waffle.getValue(i, j)+":");
 				}
 				saveFile.println();
 			}
@@ -83,7 +83,7 @@ public class Moteur implements Interface_Moteur {
 			for(int row = 0; row < waffle.getHeight(); row++) {
 				for(int col = 0; col < waffle.getWidth(); col++) {
 					// Si la case correspond au coup précédent
-					if(waffle.getValue(row, col) == currentMove - 1) {
+					if(waffle.getValue(row, col) == currentMove ) {
 						// Remet la case à zero
 						waffle.revert(row, col);
 					}
@@ -91,6 +91,9 @@ public class Moteur implements Interface_Moteur {
 			}
 			// Décremente le compteur de coups
 			currentMove --;
+			currentPlayer = (currentPlayer+1) % 2; // remet le coup au Joueur precedent
+			update_graphic(); 
+			save("testSave.txt");
 			// this.switchPlayers();
 		} else {
 			System.out.println("Rien à annuler");
@@ -141,7 +144,10 @@ public class Moteur implements Interface_Moteur {
 		// System.out.println(this.arrayPlayer[0]);
 		// System.out.println(this.arrayPlayer[1]);
 		// System.out.println(this.arrayPlayer[this.whoStart]+" a commencé");
-		System.out.println("\n\nC\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
+		if (waffle.getValue(0,0) == 0)
+			System.out.println("\n\nC\'est au tour de "+this.arrayPlayer[this.currentPlayer]);
+		else 
+			System.out.println("Game is over.");
 		System.out.println("Hauteur : "+this.waffle.getHeight()+ " Largeur : "+this.waffle.getWidth());
 
 

@@ -1,23 +1,32 @@
+import java.io.File;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GameInterface extends Application {
+	
+	private Scene gameScene;
+	
+	private final int STROKE_WIDTH = 3;
 	
 	private final int winWidth = 1080;
 	private final int winHeight = 720;
 	
 	// -- Tests --
-	private final double arrayWPow = 2;
-	private final double arrayHPow = 1;
+	private int player = 1;
+	private final double arrayWPow = 3;
+	private final double arrayHPow = 2;
 	private final int arrayW = (int)Math.pow(2, arrayWPow);
 	private final int arrayH = (int)Math.pow(3, arrayHPow);
 	private final Integer [][]arrayTest = {
@@ -31,26 +40,24 @@ public class GameInterface extends Application {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0}};
 	
-	@Override
-	public void start(Stage primaryStage) {
-		BorderPane borderPane = new BorderPane();
-		BorderPane borderPaneInfo = new BorderPane();
-		GridPane gridPaneGame = new GridPane();
-		GridPane gridPanePlayer = new GridPane();
-		GridPane gridPaneButtons = new GridPane();
-		
-		borderPane.setTop(gridPaneGame);
-		borderPane.setBottom(borderPaneInfo);
-		borderPaneInfo.setLeft(gridPanePlayer);
-		borderPaneInfo.setRight(gridPaneButtons);
-		
-		// -- Grille Jeu --
-		gridPaneGame.setMaxWidth(winWidth);
-		gridPaneGame.setMaxHeight(winHeight-208+6);
-		gridPaneGame.setAlignment(Pos.CENTER);
+	
+	
+	public Scene getGameScene() {
+		return gameScene;
+	}
+	
+	
+	
+	private static Scene fetchMenuScene () {
+		return new MenuInterface().getMenuScene();
+	}
+	
+	
+	
+	private void updateGame (GridPane gridPaneGame, Integer [][]arrayGame) {
 		for (int w=0; w<arrayW; w++) {
 			for (int h=0; h<arrayH; h++) {
-				if (arrayTest[h][w] == 0) {
+				if (arrayGame[h][w] == 0) {
 					// Haut Gauche
 					if (w == 0  &&  h == 0) {
 						gridPaneGame.add(new ImageGame("ressources/waffle_top_left.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
@@ -88,36 +95,108 @@ public class GameInterface extends Application {
 						gridPaneGame.add(new ImageGame("ressources/waffle_center.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
 					}
 				}
+				else {
+					if (player == 1) {
+						gridPaneGame.add(new ImageGame("ressources/red.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					else if (player == 2) {
+						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+					else {
+						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), arrayW, arrayH).getImgView(), w, h);
+					}
+				}
 			}
 		}
+	}
+	
+	
+	
+	@Override
+	@SuppressWarnings("Convert2Lambda")
+	public void start(Stage primaryStage) {
+		// -- Panes Initialisation --
+		BorderPane borderPane = new BorderPane();
+		BorderPane borderPaneInfo = new BorderPane();
+		GridPane gridPaneGame = new GridPane();
+		GridPane gridPanePlayer = new GridPane();
+		GridPane gridPaneButtons = new GridPane();
+		
+		borderPane.setTop(gridPaneGame);
+		borderPane.setBottom(borderPaneInfo);
+		borderPaneInfo.setLeft(gridPanePlayer);
+		borderPaneInfo.setRight(gridPaneButtons);
+		
+		
+		// -- Grille Jeu --
+		gridPaneGame.setMinWidth(winWidth);
+		gridPaneGame.setMinHeight((winHeight/4)*3);
+		gridPaneGame.setMaxWidth(winWidth);
+		gridPaneGame.setMaxHeight((winHeight/4)*3);
+		gridPaneGame.setAlignment(Pos.CENTER);
+		updateGame(gridPaneGame, arrayTest);
+		
+		
 		
 		// -- Info Joueurs --
-		Rectangle rectInfo = new Rectangle(0, 0, ((winWidth-6)/2), 208);
+		Rectangle rectInfo = new Rectangle(0, 0, ((winWidth-(STROKE_WIDTH*2))/2), ((winHeight/4)-STROKE_WIDTH));
 		rectInfo.setFill(Color.LIGHTGREY);
 		rectInfo.setStroke(Color.BLACK);
-		rectInfo.setStrokeWidth(3);
+		rectInfo.setStrokeWidth(STROKE_WIDTH);
 		Text textPlayer = new Text("Joueur");
 		textPlayer.setStyle("-fx-font-size: 50pt;");
 		
 		// -- Info Bouttons --
-		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth)/2)-9, 208);
+		Rectangle rectButton = new Rectangle(((winWidth-6)/2), 0, ((winWidth/2)-STROKE_WIDTH), ((winHeight/4)-STROKE_WIDTH));
 		rectButton.setFill(Color.LIGHTGREY);
 		rectButton.setStroke(Color.BLACK);
-		rectButton.setStrokeWidth(3);
+		rectButton.setStrokeWidth(STROKE_WIDTH);
+		
 		Button buttonUndo = new Button("Undo");
 		Button buttonSave = new Button("Save");
 		Button buttonMenu = new Button("Menu");
+		
 		buttonUndo.setMaxHeight(Double.MAX_VALUE);
 		buttonSave.setMaxHeight(Double.MAX_VALUE);
 		buttonMenu.setMaxHeight(Double.MAX_VALUE);
+		
 		buttonUndo.setStyle("-fx-font-size: 20pt;");
 		buttonSave.setStyle("-fx-font-size: 20pt;");
 		buttonMenu.setStyle("-fx-font-size: 20pt;");
+		
+		buttonUndo.setOnMouseClicked(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				System.out.println("Undo...");
+			}
+		});
+		
+		buttonSave.setOnMouseClicked(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Save current Waffle game...");
+				File file = fileChooser.showSaveDialog(primaryStage);
+				if (file != null) {
+					System.out.println("Save...");
+				}
+			}
+		});
+		
+		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				primaryStage.setWidth(primaryStage.getWidth());
+				primaryStage.setHeight(primaryStage.getHeight());
+				primaryStage.setScene(fetchMenuScene());
+				System.out.println("Return to Menu...");
+			}
+		});
+		
 		HBox hBoxButtons = new HBox();
 		hBoxButtons.setSpacing(30);
 		hBoxButtons.setMaxHeight(104);
 		hBoxButtons.getChildren().addAll(buttonUndo, buttonSave, buttonMenu);
-		
 		
 		
 		
@@ -134,16 +213,16 @@ public class GameInterface extends Application {
 		
 		
 		// -- Scene --
-		Scene scene = new Scene(borderPane, 300, 250);
+		gameScene = new Scene(borderPane, winWidth, winHeight);
 		
-		primaryStage.setTitle("Waffle 1.0");
-		primaryStage.setWidth(winWidth);
-		primaryStage.setHeight(winHeight);
 		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
+		primaryStage.setScene(gameScene);
+		primaryStage.sizeToScene();
 		primaryStage.show();
 	}
-
+	
+	
+	
 	public static void main(String[] args) {
 		launch(args);
 	}

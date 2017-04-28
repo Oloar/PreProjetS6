@@ -16,6 +16,8 @@ public class MenuInterface extends Application{
     public static Scene menuPrincipal;
     public static Scene menuSecondaire;
     public static Stage stage;
+    private Button resumeGame;
+    private Button loadGame;
 
     @Override
     public void start(Stage primaryStage) {
@@ -54,8 +56,8 @@ public class MenuInterface extends Application{
 
     	//Buttons du menu principal
     	Button newGame = createButton("  Nouvelle partie  ", "0");
-    	Button resumeGame = createButton("Continuer la partie", "1");
-    	Button loadGame = createButton("Charger la partie", "2");
+    	resumeGame = createButton("Continuer la partie", "1");
+    	loadGame = createButton("Charger la partie", "2");
         Button exitGame = createButton("  Quitter le jeu   ", "3");
         loadGame.setDisable(true); // permet de désactiver un boutton (utile pour le boutton "Continuer" lorsqu'aucue partie n'est savegardée)
         resumeGame.setDisable(true);
@@ -108,6 +110,22 @@ public class MenuInterface extends Application{
 	
 	private static void startGame(){
 		new GameInterface().start(stage);
+	}
+
+	public void setOnResumeButton(){
+		this.resumeGame.setDisable(false);
+	}
+
+	public void setOffResumeButton(){
+		this.resumeGame.setDisable(true);
+	}
+
+	public void setOnLoadButton(){
+		this.loadGame.setDisable(false);
+	}
+
+	public void setOffLoadButton(){
+		this.loadGame.setDisable(true);
 	}
 
     // Handler qui traite les events des différents bouttons. Pour l'instant :

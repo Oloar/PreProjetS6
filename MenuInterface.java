@@ -13,26 +13,21 @@ public class MenuInterface extends Application{
     
     private final int winWidth = 1080;
     private final int winHeight = 720;
-    private Scene menuPrincipal;
-    private Scene menuSecondaire;
+    public static Scene menuPrincipal;
+    public static Scene menuSecondaire;
+    public static Stage stage;
 
     @Override
     public void start(Stage primaryStage) {
-        
+        this.stage = primaryStage;
         this.initMenuPrincipal();
         this.initMenuSecondaire();
-
-        primaryStage.setTitle("Waffle 1.0");
-        primaryStage.setWidth(winWidth);
-        primaryStage.setHeight(winHeight);
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("ressources/waffle.png"));
-        primaryStage.setScene(menuPrincipal);
-        
-        primaryStage.show();
+        this.initStage();
+        this.stage.show();
     }
 
-    public void initMenuSecondaire(){
+    // initialisation du menu secondaire
+    private void initMenuSecondaire(){
 
     	//Buttons du menu secondaire
     	Button solo = createButton("Solo", "4");
@@ -63,7 +58,8 @@ public class MenuInterface extends Application{
  		this.menuSecondaire = new Scene(menu, 300, 250);
     }
 
-    public void initMenuPrincipal(){
+    // initialisation du menu principal
+    private void initMenuPrincipal(){
 
     	//Buttons du menu principal
     	Button newGame = createButton("  Nouvelle partie  ", "0");
@@ -97,13 +93,26 @@ public class MenuInterface extends Application{
 
     }
 
+    // initialise le stage
+    private void initStage(){
+    	this.stage.setTitle("Waffle 1.0");
+        this.stage.setWidth(winWidth);
+        this.stage.setHeight(winHeight);
+        this.stage.setResizable(false);
+        this.stage.getIcons().add(new Image("ressources/waffle.png"));
+        this.stage.setScene(this.menuPrincipal);
+    }
 
     // Fonction qui crée un boutton avec comme texte dessus txt, comme identifiant label et qui associe le handler 
-    public Button createButton(String txt, String label){
+    private Button createButton(String txt, String label){
     	Button b = new Button(txt);
     	b.setId(label);
     	b.setOnAction(handler);
     	return b;
+    }
+
+    public final Scene fetchGameScene(){
+    	return GameInterface.getGameScene();
     }
 
     // Handler qui traite les events des différents bouttons. Pour l'instant :
@@ -113,10 +122,13 @@ public class MenuInterface extends Application{
 
         @Override
         public void handle(final ActionEvent event) {
+			// Scene menuPrincipal = getMenuScene();
+
             Button b = (Button) event.getSource();
 	    	switch(b.getId()){
 	    		case "0":		// Boutton Du menu principal : Nouvelle partie
 	    			System.out.println("Lancement d'une nouvelle partie");
+	    			
 	    			break;
 	    		case "1":		// Boutton Du menu principal : Chargement de la partie quitée
 	    			System.out.println("Chargement de la partie en cours");
@@ -140,9 +152,6 @@ public class MenuInterface extends Application{
         }
     };
 
-    public final Scene getMenuScene () {
-    	return this.menuPrincipal;
-    }
 
  	public static void main(String[] args) {
         launch(args);

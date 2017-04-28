@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.io.*;
+import java.util.Scanner;
 
 public class Moteur implements Interface_Moteur {
 
@@ -14,7 +15,7 @@ public class Moteur implements Interface_Moteur {
 	public Moteur(int height, int width, int player1, int player2){
 
 		Random rand = new Random();
-		this.whoStart = rand.nextInt(2)+1;
+		this.whoStart = rand.nextInt(2);
 		this.currentPlayer = this.whoStart;
 		this.currentMove = 0;
 
@@ -29,17 +30,22 @@ public class Moteur implements Interface_Moteur {
 	public void eat(int i, int j){
 
 		if(this.waffle.isInWaffle(i, j)){
-			// Incremente le compteur de coups
-			currentMove++;
-			for(int row = i; row < waffle.getHeight(); row++) {
-				for(int col = j; col < waffle.getWidth(); col++) {
-					if(waffle.isEatable(row, col)) {
-						waffle.eatCase(row, col, currentMove);
+			if(this.waffle.isEatable(i, j)){
+
+				// Incremente le compteur de coups
+				currentMove++;
+				for(int row = i; row < waffle.getHeight(); row++) {
+					for(int col = j; col < waffle.getWidth(); col++) {
+						if(waffle.isEatable(row, col)) {
+							waffle.eatCase(row, col, currentMove);
+						}
 					}
 				}
+				currentPlayer = (currentPlayer+1) % 2;
+				update_graphic();
+			} else {
+				System.out.println("Déjà mangé");
 			}
-			currentPlayer = (currentPlayer+1) % 2;
-			update_graphic();
 		} else {
 			System.out.println("OutOfGauffreException");
 		}
@@ -110,8 +116,32 @@ public class Moteur implements Interface_Moteur {
 		// appel a IHM
 	}
 
-	public boolean isFinished(){
+	/*public boolean isFinished(){
 		return this.waffle.isAWin();
+	}*/
+
+	public void game(boolean affText, boolean affGraph){
+
+		int i, j;
+
+		while(!this.waffle.isAWin()){
+			if(affText){
+				this.print_text();
+			}
+			if(affGraph){
+				// not implemented
+			}
+
+			Scanner sc = new Scanner(System.in);
+
+			i = sc.nextInt();
+			j = sc.nextInt();
+
+			this.eat(i, j);
+		}
+
+		System.out.println("Le joueur "+(currentPlayer+1%2)+" a gagné");
+
 	}
 
 }

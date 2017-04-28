@@ -3,6 +3,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 public class ImageGame {
 	
@@ -14,15 +16,22 @@ public class ImageGame {
 		this.setImgView(new ImageView(this.img));
 		this.getImgView().setFitWidth(((int)paneW/waffleW));
 		this.getImgView().setFitHeight(((int)paneH/waffleH));
+		this.getImgView().addEventFilter(MouseEvent.MOUSE_CLICKED, event -> System.out.println( "Node: " + this.getImgView() + " at " + GridPane.getRowIndex(this.getImgView()) + "/" + GridPane.getColumnIndex(this.getImgView())));
 	}
 
+	
+	
 	public final ImageView getImgView() {
 		return imgView;
 	}
 
+	
+	
 	public final void setImgView(ImageView imgView) {
 		this.imgView = imgView;
 	}
+	
+	
 	
 	private Image resample(Image input, int scaleFactor) {
 		final int W = (int) input.getWidth();

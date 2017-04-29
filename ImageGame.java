@@ -1,4 +1,7 @@
+import java.awt.Transparency;
+
 import javafx.event.EventHandler;
+import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -12,11 +15,13 @@ public class ImageGame {
 	private final Image img;
 	private ImageView imgView;
 	
+	private Bloom bloom = new Bloom();
+	
 	private Integer clickX;
 	private Integer clickY;
 
 	ImageGame(){
-		this.img = new Image("ressources/blanck.png");
+		this.img = new Image("ressources/blank.png");
 	}
 	
 	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH, Moteur m) {
@@ -29,13 +34,24 @@ public class ImageGame {
 			public void handle(MouseEvent event) {
 				clickX = GridPane.getColumnIndex(ImageGame.this.getImgView());
 				clickY = GridPane.getRowIndex(ImageGame.this.getImgView());
-
 				if(!m.isIA()){
 					m.eat(clickY, clickX); 
 				}
-
-
 				System.out.println("Node: " + ImageGame.this.getImgView() + " at " + GridPane.getRowIndex(ImageGame.this.getImgView()) + "/" + GridPane.getColumnIndex(ImageGame.this.getImgView()));
+			}
+		});
+		this.getImgView().addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				bloom.setThreshold(0.5);
+				ImageGame.this.getImgView().setEffect(bloom);
+			}
+		});
+		this.getImgView().addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				bloom.setThreshold(1.0);
+				ImageGame.this.getImgView().setEffect(bloom);
 			}
 		});
 	}

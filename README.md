@@ -32,7 +32,7 @@ Votre maquette doit comporter au moins les éléments suivants :
     2. regroupement de toutes les informations importantes pour l'utilisateur :
     3. état de la gaufre
     4. joueur ayant la main
-    4. interface ergonomique de saisie du coup à jouer et d'accès aux fonctionnalités
+    5. interface ergonomique de saisie du coup à jouer et d'accès aux fonctionnalités
 - IA :
     1. 3 niveaux pour l'IA :
     2. jeu aléatoire

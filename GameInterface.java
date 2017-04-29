@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 public class GameInterface extends Application {
 	
+	private static MenuInterface menuInterface = new MenuInterface();
+	
 	private Scene gameScene;
 	
 	private GridPane gridPaneGame;
@@ -76,7 +78,7 @@ public class GameInterface extends Application {
 	
 	
 	private static Scene fetchMenuScene () {
-		return new MenuInterface().getMenuScene();
+		return menuInterface.getMenuScene();
 	}
 	
 	
@@ -149,7 +151,7 @@ public class GameInterface extends Application {
 						gridPaneGame.add(new ImageGame("ressources/blue.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 					else {
-						gridPaneGame.add(new ImageGame("ressources/blanck.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
+						gridPaneGame.add(new ImageGame("ressources/blank.png", gridPaneGame.getMaxWidth(), gridPaneGame.getMaxHeight(), widthWaffle, heightWaffle, this.m).getImgView(), w, h);
 					}
 				}
 			}
@@ -229,6 +231,7 @@ public class GameInterface extends Application {
 				primaryStage.setWidth(primaryStage.getWidth());
 				primaryStage.setHeight(primaryStage.getHeight());
 				primaryStage.setScene(fetchMenuScene());
+				//menuInterface.setOnResumeButton(); FIXME
 				System.out.println("Return to Menu...");
 			}
 		});

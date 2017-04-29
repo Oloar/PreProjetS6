@@ -1,12 +1,11 @@
 import java.util.Random;
 import java.io.*;
-import java.util.Scanner;
 
 public class Moteur implements Interface_Moteur {
 
 	Waffle waffle;
 	int whoStart;
-	Joueur arrayPlayer[];
+	private Joueur arrayPlayer[];
 	int currentMove;
 	int currentPlayer;
 
@@ -107,40 +106,41 @@ public class Moteur implements Interface_Moteur {
 
 	public boolean load(String filename){
 		try {
-                FileReader filereader = new FileReader(filename);
-		BufferedReader br = new BufferedReader(filereader);
-                String tempVar;
-		int tempHeight, tempWidth, player1, player2, whoStarted;
-		player1 = Integer.parseInt(br.readLine());
-		player2 = Integer.parseInt(br.readLine());
-		whoStarted = Integer.parseInt(br.readLine());
-		tempHeight = Integer.parseInt(br.readLine());
-		tempWidth = Integer.parseInt(br.readLine());		
-		if (player1 >=0 && player2 >= 0 && tempHeight >= 0 && whoStarted >= 0 && tempWidth >= 0) { 
-			int [][] tempWaffle = new int[tempHeight][tempWidth];
-			for (int i=0; i<tempHeight; i++) {
-				tempVar = br.readLine();
-				if (!tempVar.matches("([0-9]+:)+")) return false;
-				
-				String [] moveValues = tempVar.split("[:]");
-				for (int j=0; j<tempWidth; j++) {
-					tempWaffle[i][j] = Integer.parseInt(moveValues[j]);
+            FileReader filereader = new FileReader(filename);
+            BufferedReader br = new BufferedReader(filereader);
+            String tempVar;
+			int tempHeight, tempWidth, player1, player2, whoStarted;
+			player1 = Integer.parseInt(br.readLine());
+			player2 = Integer.parseInt(br.readLine());
+			whoStarted = Integer.parseInt(br.readLine());
+			tempHeight = Integer.parseInt(br.readLine());
+			tempWidth = Integer.parseInt(br.readLine());		
+			if (player1 >=0 && player2 >= 0 && tempHeight >= 0 && whoStarted >= 0 && tempWidth >= 0) { 
+				int [][] tempWaffle = new int[tempHeight][tempWidth];
+				for (int i=0; i<tempHeight; i++) {
+					tempVar = br.readLine();
+					if (!tempVar.matches("([0-9]+:)+")) return false;
+					
+					String [] moveValues = tempVar.split("[:]");
+					for (int j=0; j<tempWidth; j++) {
+						tempWaffle[i][j] = Integer.parseInt(moveValues[j]);
+					}
 				}
+				Waffle w = new Waffle(tempHeight, tempWidth, tempWaffle);
+				this.waffle = w;
+	                	this.arrayPlayer[0] = new Joueur(1, player1, this.waffle); ;
+				this.arrayPlayer[1] = new Joueur(2, player2, this.waffle);
+	                	this.whoStart = whoStarted;
+				
+				//print_text();
 			}
-			Waffle w = new Waffle(tempHeight, tempWidth, tempWaffle);
-			this.waffle = w;
-                	this.arrayPlayer[0] = new Joueur(1, player1, this.waffle); ;
-			this.arrayPlayer[1] = new Joueur(2, player2, this.waffle);
-                	this.whoStart = whoStarted;
-			
-			//print_text();  
-		}
-		else 
-			return false;              
-                }
-                catch (Exception e) {
-                	System.out.println(e);
-                }
+			else {
+				return false;
+			}
+        }
+        catch (Exception e) {
+        	System.out.println(e);
+        }
 		return true;
 	}
 
@@ -167,6 +167,7 @@ public class Moteur implements Interface_Moteur {
 
 	public void update_graphic(){
 		// appel a IHM
+		System.out.println();
 		gi.updateGame(this.getGauffre(), arrayPlayer[currentPlayer], currentMove);
 	}
 
@@ -176,7 +177,7 @@ public class Moteur implements Interface_Moteur {
 
 	public void game(boolean affText, boolean affGraph){
 
-		int i, j;
+		//int i, j;
 
 		this.update_graphic();		
 
@@ -199,7 +200,7 @@ public class Moteur implements Interface_Moteur {
 		int [][] retu = new int[height][width];
 
 		for(int i=0; i<height; i++){
-			for(int j=0; j<height; j++){
+			for(int j=0; j<width; j++){
 				retu[i][j] = waffle.getValue(i, j);
 			}
 		}
@@ -220,6 +221,10 @@ public class Moteur implements Interface_Moteur {
 
 	public String getPlayer(){
 		return arrayPlayer[currentPlayer].toString();
+	}
+
+	public Joueur getPlayerNumber(){
+		return arrayPlayer[currentPlayer];
 	}
 
 }

@@ -2,13 +2,14 @@ import java.io.*;
 
 class Main_program {
 
+	private static Moteur m;
+	private static MenuInterface mi = new MenuInterface();
+	private static GameInterface gi = new GameInterface();
+	private static int height, width;
+
 	static public void main(String [] args){
 
 		boolean affText = false, affGraph = false;
-		int height, width;
-		Moteur m;
-		MenuInterface mi = new MenuInterface();
-		GameInterface gi = new GameInterface();
 
 		if(args.length < 1){
 			System.out.println("Erreur syntaxe : java Main_program <Hauteur> <Largeur> <Mode>");
@@ -33,34 +34,44 @@ class Main_program {
 				}
 
 				mi.main(args);
-
-				m = new Moteur(height, width, 0, 2, gi);
-				// gi.initGameInterface(m);
-
-
-				// System.out.println("Debut partie"); 
-				// //m.save("testSave.txt");
-				// //if (m.load("testSave.txt")) m.print_text();
-				// m.game(affText, affGraph);
 				
-				// System.out.println("\n");
-				// if (m.load("testSave.txt")) m.print_text();
-
-				// m.undo();
-				// m.print_text();
-
-				// System.out.println(m.load("testSave.txt"));
-
-				// m.undo();
-				// m.print_text();
-
-				//m.game(affText, affGraph);
-				
-								
-				
-				System.out.println("Partie terminée");
 			}
 		}
+	}
+	
+	
+	
+	public void startGame () {
+		m = new Moteur(height, width, 0, 0, gi);
+		
+		gi.initGameInterface(m);
+		
+		m.update_graphic();
+
+
+		// System.out.println("Debut partie"); 
+		// //m.save("testSave.txt");
+		// //if (m.load("testSave.txt")) m.print_text();
+		// m.game(affText, affGraph);
+		
+		// System.out.println("\n");
+		// if (m.load("testSave.txt")) m.print_text();
+
+		// m.undo();
+		// m.print_text();
+
+		// System.out.println(m.load("testSave.txt"));
+
+		// m.undo();
+		// m.print_text();
+
+		//m.game(affText, affGraph);
+	}
+
+
+
+	public GameInterface getGameInterface () {
+		return gi;
 	}
 
 

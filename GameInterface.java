@@ -56,7 +56,15 @@ public class GameInterface extends Application {
 		this.m = mo;
 		this.widthWaffle = m.getWidthWaffle();
 		this.heightWaffle = m.getHeightWaffle();
-
+		
+		// -- Grille Jeu --
+		gridPanePlayer = new GridPane();
+		gridPaneGame = new GridPane();
+		gridPaneGame.setMinWidth(winWidth);
+		gridPaneGame.setMinHeight((winHeight/4)*3);
+		gridPaneGame.setMaxWidth(winWidth);
+		gridPaneGame.setMaxHeight((winHeight/4)*3);
+		gridPaneGame.setAlignment(Pos.CENTER);
 	}
 	
 	
@@ -69,6 +77,25 @@ public class GameInterface extends Application {
 	
 	private static Scene fetchMenuScene () {
 		return new MenuInterface().getMenuScene();
+	}
+	
+	
+	
+	public void updatePlayerTurn (Joueur player) {
+		gridPanePlayer.getChildren().remove(textNumPlayer);
+		
+		if (player.getNumber() == 1) {
+			textNumPlayer = new Text("1");
+		}
+		else if (player.getNumber() == 2) {
+			textNumPlayer = new Text("2");
+		}
+		else {
+			textNumPlayer = new Text("0");
+		}
+		
+		textNumPlayer.setStyle("-fx-font-size: 50pt;");
+		gridPanePlayer.add(textNumPlayer, 170, 0);
 	}
 	
 	
@@ -127,20 +154,6 @@ public class GameInterface extends Application {
 				}
 			}
 		}
-		
-		if (player.getNumber() == 1) {
-			textNumPlayer = new Text("1");
-		}
-		else if (player.getNumber() == 2) {
-			textNumPlayer = new Text("2");
-		}
-		else {
-			textNumPlayer = new Text("0");
-		}
-		
-		textNumPlayer.setStyle("-fx-font-size: 50pt;");
-		gridPanePlayer.add(textNumPlayer, 102, 0);
-		
 	}
 	
 	
@@ -152,8 +165,6 @@ public class GameInterface extends Application {
 		// -- Panes Initialisation --
 		BorderPane borderPane = new BorderPane();
 		BorderPane borderPaneInfo = new BorderPane();
-		gridPaneGame = new GridPane();
-		gridPanePlayer = new GridPane();
 		GridPane gridPaneButtons = new GridPane();
 		
 		borderPane.setTop(gridPaneGame);
@@ -162,12 +173,6 @@ public class GameInterface extends Application {
 		borderPaneInfo.setRight(gridPaneButtons);
 		
 		
-		// -- Grille Jeu --
-		gridPaneGame.setMinWidth(winWidth);
-		gridPaneGame.setMinHeight((winHeight/4)*3);
-		gridPaneGame.setMaxWidth(winWidth);
-		gridPaneGame.setMaxHeight((winHeight/4)*3);
-		gridPaneGame.setAlignment(Pos.CENTER);
 		// -- Tests --
 		//updateGame(arrayTest);
 		

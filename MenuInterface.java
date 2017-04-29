@@ -6,11 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class MenuInterface extends Application{
     
+	private static Main_program mainProg = new Main_program();
+	
     private final int winWidth = 1080;
     private final int winHeight = 720;
     public static Scene menuPrincipal;
@@ -25,6 +27,12 @@ public class MenuInterface extends Application{
         this.initMenuPrincipal();
         this.initMenuSecondaire();
         this.initStage();
+        stage.setOnShowing(new EventHandler <WindowEvent> () {
+			@Override
+			public void handle(WindowEvent winEvent) {
+				mainProg.startGame();
+			}
+        });
         stage.show();
     }
 
@@ -109,7 +117,7 @@ public class MenuInterface extends Application{
     }
 	
 	private static void startGame(){
-		new GameInterface().start(stage);
+		mainProg.getGameInterface().start(stage);
 	}
 
 	public void setOnResumeButton(){

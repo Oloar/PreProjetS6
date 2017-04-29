@@ -20,8 +20,6 @@ class Main_program {
 		} else {
 			height = Integer.parseInt(args[0]);
 			width = Integer.parseInt(args[1]);
-			//height = 2;
-			//width = 2;
 			if(height < 0 || width < 0){
 				System.out.println("Veuillez entrer des tailles de tableau positives");
 			} else {
@@ -41,8 +39,15 @@ class Main_program {
 	
 	
 	
-	public void startGame () {
+	public void createNewMoteur () {
+		// TODO - condition versus / iaFacile / iaMoyenne / iaDifficile
 		m = new Moteur(height, width, 0, 0, gi);
+	}
+	
+	
+	
+	public void startGame () {
+		createNewMoteur();
 		
 		gi.initGameInterface(m);
 		

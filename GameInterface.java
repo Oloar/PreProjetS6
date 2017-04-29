@@ -208,6 +208,7 @@ public class GameInterface extends Application {
 		buttonUndo.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				m.undo();
 				System.out.println("Undo...");
 			}
 		});
@@ -221,6 +222,7 @@ public class GameInterface extends Application {
 				if (file != null) {
 					System.out.println("Save...");
 				}
+				m.save(file.getName());
 			}
 		});
 		

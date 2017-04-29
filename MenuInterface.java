@@ -121,6 +121,7 @@ public class MenuInterface extends Application{
 	}
 	
 	private static void startGame(){
+		// TODO - mainProg needn't to be new
 		mainProg.getGameInterface().start(stage);
 	}
 
@@ -157,7 +158,6 @@ public class MenuInterface extends Application{
 	    			System.out.println("Lancement d'une nouvelle partie");
 	    			break;
 	    		case "1":		// Boutton Du menu principal : Chargement de la partie quitée
-					//stage.setScene(new GameInterface().getGameScene());
 	    			stage.setScene(mainProg.getGameInterface().getGameScene());
 	    			System.out.println("Chargement de la partie en cours");
 	    			break;

@@ -111,10 +111,14 @@ public class MenuInterface extends Application{
 	public Scene getMenuScene(){
 		return menuPrincipal;
 	}
+	
+	public int getWinWidth(){
+		return winWidth;
+	}
 
-    private static Scene fetchGameScene(){
-    	return new GameInterface().getGameScene();
-    }
+	public int getWinHeight() {
+		return winHeight;
+	}
 	
 	private static void startGame(){
 		mainProg.getGameInterface().start(stage);
@@ -153,7 +157,8 @@ public class MenuInterface extends Application{
 	    			System.out.println("Lancement d'une nouvelle partie");
 	    			break;
 	    		case "1":		// Boutton Du menu principal : Chargement de la partie quitée
-					stage.setScene(fetchGameScene());
+					//stage.setScene(new GameInterface().getGameScene());
+	    			stage.setScene(mainProg.getGameInterface().getGameScene());
 	    			System.out.println("Chargement de la partie en cours");
 	    			break;
 		        case "2":		// Boutton Du menu principal : Chargement de la partie sauvegardé
@@ -178,8 +183,16 @@ public class MenuInterface extends Application{
         }
     };
 
-
- 	public static void main(String[] args) {
-        launch(args);
+    
+    
+    public void startMenuInterface(String[] args) {
+    	launch(args);
     }
+    
+    
+    
+    // Main is in Main_program
+ 	/*public static void main(String[] args) {
+        launch(args);
+    }*/
 }

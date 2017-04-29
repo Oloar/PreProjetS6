@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 
 public class GameInterface extends Application {
 	
-	private static MenuInterface menuInterface = new MenuInterface();
+	private MenuInterface menuInterface;
 	
 	private Scene gameScene;
 	
@@ -27,8 +27,8 @@ public class GameInterface extends Application {
 	
 	private final int STROKE_WIDTH = 3;
 	
-	private final int winWidth = 1080;
-	private final int winHeight = 720;
+	private int winWidth = 1080;
+	private int winHeight = 720;
 	
 	private int widthWaffle;
 	private int heightWaffle;
@@ -58,6 +58,11 @@ public class GameInterface extends Application {
 		this.m = mo;
 		this.widthWaffle = m.getWidthWaffle();
 		this.heightWaffle = m.getHeightWaffle();
+
+		// TODO - need to re-use the scene from MenuInterface already created at start of application
+		menuInterface = new MenuInterface();
+		winWidth = menuInterface.getWinWidth();
+		winHeight = menuInterface.getWinHeight();
 		
 		// -- Grille Jeu --
 		gridPanePlayer = new GridPane();
@@ -73,12 +78,6 @@ public class GameInterface extends Application {
 	
 	public Scene getGameScene () {
 		return gameScene;
-	}
-	
-	
-	
-	private static Scene fetchMenuScene () {
-		return menuInterface.getMenuScene();
 	}
 	
 	
@@ -228,10 +227,12 @@ public class GameInterface extends Application {
 		buttonMenu.setOnMouseClicked(new EventHandler <MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				// TODO - need to re-use the scene from MenuInterface already created at start of application
+				menuInterface.start(primaryStage);
 				primaryStage.setWidth(primaryStage.getWidth());
 				primaryStage.setHeight(primaryStage.getHeight());
-				primaryStage.setScene(fetchMenuScene());
-				//menuInterface.setOnResumeButton(); FIXME
+				primaryStage.setScene(menuInterface.getMenuScene());
+				menuInterface.setOnResumeButton();
 				System.out.println("Return to Menu...");
 			}
 		});

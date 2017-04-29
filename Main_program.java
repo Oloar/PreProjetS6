@@ -33,7 +33,7 @@ class Main_program {
 					affGraph = true;
 				}
 
-				mi.main(args);
+				mi.startMenuInterface(args);
 				
 			}
 		}

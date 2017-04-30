@@ -53,7 +53,6 @@ class Main_program {
 		
 		m.update_graphic();
 
-
 		// System.out.println("Debut partie"); 
 		// //m.save("testSave.txt");
 		// //if (m.load("testSave.txt")) m.print_text();

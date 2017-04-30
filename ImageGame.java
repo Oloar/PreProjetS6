@@ -1,5 +1,3 @@
-import java.awt.Transparency;
-
 import javafx.event.EventHandler;
 import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
@@ -9,6 +7,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class ImageGame {
 	
@@ -24,7 +23,7 @@ public class ImageGame {
 		this.img = new Image("ressources/blank.png");
 	}
 	
-	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH, Moteur m) {
+	ImageGame (String ressource, double paneW, double paneH, int waffleW, int waffleH, Moteur m, Stage stage) {
 		this.img = resample(new Image(ressource), 20);
 		this.setImgView(new ImageView(this.img));
 		this.getImgView().setFitWidth(((int)paneW/waffleW));
@@ -34,8 +33,16 @@ public class ImageGame {
 			public void handle(MouseEvent event) {
 				clickX = GridPane.getColumnIndex(ImageGame.this.getImgView());
 				clickY = GridPane.getRowIndex(ImageGame.this.getImgView());
-				if(!m.isIA()){
+				if (!m.isIA()) {
 					m.eat(clickY, clickX); 
+				}
+				if (clickX == 0  &&  clickY == 0) {
+					Joueur winner = m.endGame();
+					WinInterface winInterface = new WinInterface();
+					winInterface.initWinInterface(stage.getWidth(), stage.getHeight());
+					stage.setScene(winInterface.getWinScene());
+					winInterface.fetchWinner(winner);
+					winInterface.start(stage);
 				}
 				System.out.println("Node: " + ImageGame.this.getImgView() + " at " + GridPane.getRowIndex(ImageGame.this.getImgView()) + "/" + GridPane.getColumnIndex(ImageGame.this.getImgView()));
 			}

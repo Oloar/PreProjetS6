@@ -167,7 +167,6 @@ public class Moteur implements Interface_Moteur {
 
 	public void update_graphic(){
 		// appel a IHM
-		System.out.println();
 		gi.updateGame(this.getGauffre(), arrayPlayer[currentPlayer], currentMove);
 	}
 
@@ -175,11 +174,19 @@ public class Moteur implements Interface_Moteur {
 		return this.waffle.isAWin();
 	}*/
 
+	public Joueur endGame(){
+		this.save("testSave.txt");
+		
+		System.out.println(arrayPlayer[currentPlayer]+" a gagné !");
+
+		return arrayPlayer[currentPlayer];
+	}
+
 	public void game(boolean affText, boolean affGraph){
 
 		//int i, j;
 
-		this.update_graphic();		
+		this.update_graphic();
 
 		while(!this.waffle.isAWin()){
 			if(affText){

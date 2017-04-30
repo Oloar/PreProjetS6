@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.scene.text.*;	
 
 public class MenuInterface extends Application{
     
@@ -17,6 +18,7 @@ public class MenuInterface extends Application{
     private final int winHeight = 720;
     public static Scene menuPrincipal;
     public static Scene menuSecondaire;
+    public static Scene menuDifficulte;
     public static Stage stage;
     private Button resumeGame;
     private Button loadGame;
@@ -26,6 +28,7 @@ public class MenuInterface extends Application{
         stage = primaryStage;
         this.initMenuPrincipal();
         this.initMenuSecondaire();
+        this.initMenuSelection();
         this.initStage();
         stage.setOnShowing(new EventHandler <WindowEvent> () {
 			@Override
@@ -34,6 +37,32 @@ public class MenuInterface extends Application{
 			}
         });
         stage.show();
+    }
+
+    //initialisation du menu de selection de difficulté
+    private void initMenuSelection(){
+
+    	// Bouttons
+    	Button easy = createButton("Facile", "EZ");
+    	Button medium = createButton("Moyen", "MEDIUM");
+    	Button hard = createButton("Difficile", "HARD");
+    	Button retour = createButton("Retour", "RETOUR");
+
+    	//Grid du menu de selection de difficulté
+    	GridPane menu = new GridPane();
+    	menu.setHgap(5);
+    	menu.setVgap(5);
+    	Image imgTitle = new Image("ressources/waffle_title.png");
+    	ImageView viewTitle = new ImageView(imgTitle);
+    	menu.add(viewTitle, 55, 10);
+    	GridPane.setColumnSpan(viewTitle, 200);
+    	menu.add(easy, 75, 30);
+    	menu.add(medium, 75, 35);
+    	menu.add(hard, 75, 40);
+    	menu.add(retour, 75, 45);
+
+    	menuDifficulte = new Scene(menu, 300, 250);
+
     }
 
     // initialisation du menu secondaire
@@ -168,7 +197,7 @@ public class MenuInterface extends Application{
 		            System.exit(0);
 		        	break;		        
 		        case "4":		// Boutton du menu secondaire : lancement d'une nouvelle partie solo
-		        	startGame(); 
+		        	stage.setScene(menuDifficulte);
 		        	System.out.println("Lancement d'une nouvelle partie en solo");
 		        	break;		       
 		        case "5":		// Boutton du menu secondaire : lancement d'une nouvelle partie en versus
@@ -178,6 +207,18 @@ public class MenuInterface extends Application{
 		        case "6":		// Boutton du menu secondaire : retour au menu principal
 					stage.setScene(menuPrincipal);
 		        	System.out.println("Retour au menu principal");
+		        	break;
+		        case "EZ":
+		        	startGame();
+		        	break;
+		        case "MEDIUM":
+		        	startGame();
+		        	break;
+		        case "HARD":
+		        	startGame();
+		        	break;
+		        case "RETOUR":
+		        	stage.setScene(menuSecondaire);
 		        	break;
 	    	}
         }

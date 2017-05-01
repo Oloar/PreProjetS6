@@ -28,20 +28,20 @@ Votre maquette doit comporter au moins les éléments suivants :
 
 - jouer à deux joueurs humains, jouer contre l'ordinateur
 - IHM :
-    1. affichage lisible du déroulement du jeu 
-    2. regroupement de toutes les informations importantes pour l'utilisateur :
-    3. état de la gaufre
-    4. joueur ayant la main
-    4. interface ergonomique de saisie du coup à jouer et d'accès aux fonctionnalités
+    1. ~~affichage lisible du déroulement du jeu~~
+    2. ~~regroupement de toutes les informations importantes pour l'utilisateur :~~
+        1. ~~état de la gaufre~~
+        2. ~~joueur ayant la main~~
+    4. ~~interface ergonomique de saisie du coup à jouer et d'accès aux fonctionnalités~~
 - IA :
-    1. 3 niveaux pour l'IA :
-    2. jeu aléatoire
-    3. choix d'un coup non perdant (s'il existe) ou gagnant (s'il existe)
-    4. min-max
+    1. ~~3 niveaux pour l'IA :~~
+        1. ~~jeu aléatoire~~
+        2. ~~choix d'un coup non perdant (s'il existe) ou gagnant (s'il existe)~~
+        3. ~~Stratégie gagnante, laisse jouer.~~
 - fonctionnalités :
-    1. démarrer une nouvelle partie (en abandonnant l'état courant)
-    2. fonctions annuler et rejouer (conservation de l'historique de tous les coups)
-    3. sauvegarder et restaurer une partie et son historique complet
+    1. démarrer une nouvelle partie (en abandonnant l'état courant) **(Fait côté moteur) TODO: lien vers IHM**
+    2. fonctions annuler et rejouer (conservation de l'historique de tous les coups) **(Fait côté moteur) TODO: lien vers IHM**
+    3. sauvegarder et restaurer une partie et son historique complet **(Fait côté moteur) TODO: lien vers IHM**
 
 Vous devrez faire une mini-démo de votre maquette avant le choix du sujet pour le reste du projet.
 
@@ -50,7 +50,7 @@ Quelques idées de ce que vous pouvez ajouter au cahier des charges minimal.
 - possibilité pour le joueur d'abandonner en cours de partie
 - fonction *démonstration*
 - aide(s) au joueur : tutoriel, suggestion d'un coup
-- possibilité de choisir la taille de la gaufre
+- ~~possibilité de choisir la taille de la gaufre~~
 - possibilité d'enchaîner les parties (de faire un match)
 - stockage des meilleurs scores, classement
 - navigation directe dans l'historique

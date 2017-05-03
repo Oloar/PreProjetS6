@@ -1,10 +1,15 @@
 MIT License
 
 Copyright (c) 2017 Maxime Isnel
+
 Copyright (c) 2017 Calvin Masonnet
+
 Copyright (c) 2017 Bastien Zigmann
+
 Copyright (c) 2017 Emeziem Uwalaka
+
 Copyright (c) 2017 Thibault Villermet
+
 Copyright (c) 2017 Gaëtan Sorin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

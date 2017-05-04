@@ -2,7 +2,7 @@ MIT License
 
 Copyright (c) 2017 Maxime Isnel
 
-Copyright (c) 2017 Calvin Masonnet
+Copyright (c) 2017 Calvin Massonnet
 
 Copyright (c) 2017 Bastien Zigmann
 
